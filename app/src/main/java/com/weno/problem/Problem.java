@@ -7,4 +7,8 @@ public class Problem {
     public Problem(String title) {
         this.title = title;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
