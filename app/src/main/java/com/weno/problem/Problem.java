@@ -1,11 +1,17 @@
 package com.weno.problem;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class Problem {
 
@@ -16,16 +22,9 @@ public class Problem {
     @Column
     private String title;
 
-    public Problem() {
-        this.id = id;
-    }
-
+    @Builder
     public Problem(String title) {
         this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
 }
