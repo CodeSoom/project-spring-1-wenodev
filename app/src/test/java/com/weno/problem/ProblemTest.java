@@ -3,6 +3,8 @@ package com.weno.problem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class ProblemTest {
 
     private Problem problem;
@@ -14,7 +16,7 @@ class ProblemTest {
 
     @Test
     void testTitle(){
-        problem.getTest();
+        assertThat(problem.getTitle()).isEqualTo("dummy-test-title");
     }
 
 }
