@@ -1,25 +1,45 @@
 package com.weno.problem;
 
 import com.weno.problem.dto.ProblemResponseDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ProblemServiceTest {
 
-    @InjectMocks
+    private ProblemRepository problemRepository;
     private ProblemService problemService;
 
-    @Mock
-    private ProblemRepository problemRepository;
+    @BeforeEach
+    void setUp(){
+        problemRepository = mock(ProblemRepository.class);
+        problemService = new ProblemService(problemRepository);
+    }
 
     @Test
     void testGetAllProblems(){
-        given(problemRepository.findAll()).willReturn(List.of());
+
+        Problem problem = Problem.builder()
+                .title("dummy-test-title")
+                .build();
+
+        List<Problem> problems = Arrays.asList(problem);
+
+        given(problemRepository.findAll()).willReturn(problems);
+
+        List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
+
+        assertThat(problemResponses).isNotEmpty();
+
+        verify(problemRepository).findAll();
+
     }
 
 }
