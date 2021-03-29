@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,8 +37,9 @@ class ProblemControllerTest {
 
     @Test
     void testSaveProblem() throws Exception {
-        mockMvc.perform(post(BASE_URL))
+        mockMvc.perform(post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\" : \"dummy-test-title\"}"))
                 .andExpect(status().isCreated());
-
     }
 }
