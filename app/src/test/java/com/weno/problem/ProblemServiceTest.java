@@ -25,21 +25,16 @@ class ProblemServiceTest {
 
     @Test
     void testGetAllProblems(){
-
         Problem problem = Problem.builder()
                 .title("dummy-test-title")
                 .build();
 
         List<Problem> problems = Arrays.asList(problem);
-
         given(problemRepository.findAll()).willReturn(problems);
-
         List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
 
-        assertThat(problemResponses).isNotEmpty();
-
+        assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title");
         verify(problemRepository).findAll();
-
     }
 
 }
