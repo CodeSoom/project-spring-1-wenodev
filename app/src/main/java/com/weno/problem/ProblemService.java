@@ -31,6 +31,6 @@ public class ProblemService {
 
     public ProblemResponseDto getProblem(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
-        return
+        return ProblemResponseDto.of(problem);
     }
 }
