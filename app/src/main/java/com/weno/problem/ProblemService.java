@@ -1,6 +1,7 @@
 package com.weno.problem;
 
 import com.weno.problem.dto.ProblemResponseDto;
+import com.weno.problem.exception.ProblemNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class ProblemService {
     }
 
     public ProblemResponseDto getProblem(Long id) {
-        return null;
+        Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
+        return
     }
 }
