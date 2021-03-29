@@ -27,4 +27,8 @@ public class ProblemService {
         }
         return responses;
     }
+
+    public ProblemResponseDto getProblem(Long id) {
+        return null;
+    }
 }
