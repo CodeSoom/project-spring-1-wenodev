@@ -17,19 +17,21 @@ class ProblemServiceTest {
 
     private ProblemRepository problemRepository;
     private ProblemService problemService;
+    private Problem problem;
+    private static final Long EXISTED_ID = 1L;
 
     @BeforeEach
     void setUp(){
         problemRepository = mock(ProblemRepository.class);
         problemService = new ProblemService(problemRepository);
+        problem = Problem.builder()
+                .title("dummy-test-title")
+                .build();
+
     }
 
     @Test
     void testGetAllProblems(){
-        Problem problem = Problem.builder()
-                .title("dummy-test-title")
-                .build();
-
         List<Problem> problems = Arrays.asList(problem);
         given(problemRepository.findAll()).willReturn(problems);
         List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
@@ -40,15 +42,11 @@ class ProblemServiceTest {
 
     @Test
     void testGetProblem(){
-        Problem problem = Problem.builder()
-                .title("dummy-test-title")
-                .build();
-
-        given(problemRepository.findById(1L)).willReturn(Optional.of(problem));
-        ProblemResponseDto problemResponse = problemService.getProblem(1L);
+        given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        ProblemResponseDto problemResponse = problemService.getProblem(EXISTED_ID);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title");
-        verify(problemRepository).findById(1L);
+        verify(problemRepository).findById(EXISTED_ID);
     }
 
 }
