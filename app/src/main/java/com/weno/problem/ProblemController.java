@@ -36,6 +36,6 @@ public class ProblemController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ProblemResponseDto saveProblem(@RequestBody ProblemRequestDto request){
-        return null;
+        return problemService.saveProblem(request);
     }
 }

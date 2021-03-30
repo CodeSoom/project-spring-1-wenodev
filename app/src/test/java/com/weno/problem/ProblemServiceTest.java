@@ -1,5 +1,6 @@
 package com.weno.problem;
 
+import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -47,6 +49,18 @@ class ProblemServiceTest {
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title");
         verify(problemRepository).findById(EXISTED_ID);
+    }
+
+    @Test
+    void testSaveProblem(){
+        ProblemRequestDto problemRequest = ProblemRequestDto.builder()
+                .title("dummy-test-title-2")
+                .build();
+
+        given(problemRepository.save(any(Problem.class))).willReturn(problem);
+        ProblemResponseDto problemResponse = problemService.saveProblem(problemRequest);
+
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-2");
     }
 
 }
