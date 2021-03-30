@@ -36,6 +36,9 @@ public class ProblemService {
     }
 
     public ProblemResponseDto saveProblem(ProblemRequestDto request) {
-        return null;
+        Problem problem = ProblemRequestDto.toEntity(request);
+        problemRepository.save(problem);
+        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
+        return problemResponse;
     }
 }

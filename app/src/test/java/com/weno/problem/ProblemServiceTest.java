@@ -61,6 +61,7 @@ class ProblemServiceTest {
         ProblemResponseDto problemResponse = problemService.saveProblem(problemRequest);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-2");
+        verify(problemRepository).save(any(Problem.class));
     }
 
 }
