@@ -79,4 +79,12 @@ class ProblemServiceTest {
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-3");
     }
 
+    @Test
+    void testDeleteProblem(){
+        given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        ProblemResponseDto problemResponse = problemService.deleteProblem(EXISTED_ID);
+
+        assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
+    }
+
 }

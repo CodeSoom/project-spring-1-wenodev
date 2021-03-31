@@ -49,7 +49,7 @@ public class ProblemController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ProblemResponseDto deleteProblem(@PathVariable Long id){
-        return null;
+        return problemService.deleteProblem(id);
     }
 
 }

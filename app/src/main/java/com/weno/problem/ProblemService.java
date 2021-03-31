@@ -49,4 +49,8 @@ public class ProblemService {
         ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
         return problemResponse;
     }
+
+    public ProblemResponseDto deleteProblem(Long id) {
+        return null;
+    }
 }
