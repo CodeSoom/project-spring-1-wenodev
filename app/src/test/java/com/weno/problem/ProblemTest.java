@@ -18,7 +18,4 @@ class ProblemTest {
     void testTitle(){
         assertThat(problem.getTitle()).isEqualTo("dummy-test-title");
     }
-
-
-
 }

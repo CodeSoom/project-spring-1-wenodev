@@ -58,5 +58,4 @@ class ProblemControllerTest {
         mockMvc.perform(delete(BASE_URL + "/" + EXITED_ID))
                 .andExpect(status().isNoContent());
     }
-
 }

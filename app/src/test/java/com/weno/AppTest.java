@@ -10,5 +10,4 @@ class AppTest {
     void basicTest(){
         System.out.println("working..");
     }
-
 }

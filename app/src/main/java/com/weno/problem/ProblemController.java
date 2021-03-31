@@ -51,5 +51,4 @@ public class ProblemController {
     public ProblemResponseDto deleteProblem(@PathVariable Long id){
         return problemService.deleteProblem(id);
     }
-
 }

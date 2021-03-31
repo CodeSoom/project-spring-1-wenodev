@@ -16,5 +16,4 @@ public class ProblemResponseDto {
                 .title(problem.getTitle())
                 .build();
     }
-
 }
