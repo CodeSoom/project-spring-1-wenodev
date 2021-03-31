@@ -43,7 +43,7 @@ public class ProblemController {
 
     @PutMapping("/{id}")
     public ProblemResponseDto updateProblem(@PathVariable Long id, @RequestBody ProblemRequestDto request){
-        return null;
+        return problemService.updateProblem(id, request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -11,7 +11,7 @@ class ProblemTest {
 
     @BeforeEach
     void setUp(){
-        problem = new Problem("dummy-test-title");
+        problem = new Problem(1L,"dummy-test-title");
     }
 
     @Test

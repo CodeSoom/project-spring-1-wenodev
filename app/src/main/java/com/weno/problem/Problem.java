@@ -23,7 +23,8 @@ public class Problem {
     private String title;
 
     @Builder
-    public Problem(String title) {
+    public Problem(Long id, String title) {
+        this.id = id;
         this.title = title;
     }
 

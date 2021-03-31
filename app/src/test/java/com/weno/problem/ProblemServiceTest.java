@@ -64,4 +64,14 @@ class ProblemServiceTest {
         verify(problemRepository).save(any(Problem.class));
     }
 
+    @Test
+    void testUpdateProblem(){
+        ProblemRequestDto problemRequest = ProblemRequestDto.builder()
+                .title("dummy-test-title-3")
+                .build();
+
+        given(problemRepository.)
+
+    }
+
 }
