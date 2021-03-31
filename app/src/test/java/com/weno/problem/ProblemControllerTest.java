@@ -51,5 +51,5 @@ class ProblemControllerTest {
                 .content("{\"title\" : \"dummy-test-title\"}"))
                 .andExpect(status().isOk());
     }
-    
+
 }
