@@ -27,6 +27,7 @@ class ProblemServiceTest {
         problemRepository = mock(ProblemRepository.class);
         problemService = new ProblemService(problemRepository);
         problem = Problem.builder()
+                .id(EXISTED_ID)
                 .title("dummy-test-title")
                 .build();
 
@@ -70,8 +71,10 @@ class ProblemServiceTest {
                 .title("dummy-test-title-3")
                 .build();
 
-        given(problemRepository.)
+        given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        ProblemResponseDto problemResponse = problemService.updateProblem(EXISTED_ID, problemRequest);
 
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-3");
     }
 
 }
