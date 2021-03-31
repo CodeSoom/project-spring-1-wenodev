@@ -30,7 +30,6 @@ class ProblemServiceTest {
                 .id(EXISTED_ID)
                 .title("dummy-test-title")
                 .build();
-
     }
 
     @Test
@@ -85,5 +84,4 @@ class ProblemServiceTest {
 
         assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
     }
-
 }
