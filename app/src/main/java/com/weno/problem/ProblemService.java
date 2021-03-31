@@ -51,6 +51,9 @@ public class ProblemService {
     }
 
     public ProblemResponseDto deleteProblem(Long id) {
-        return null;
+        Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
+        problemRepository.delete(problem);
+        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
+        return problemResponse;
     }
 }
