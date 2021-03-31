@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class ProblemService {
 
@@ -43,6 +44,9 @@ public class ProblemService {
     }
 
     public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
-        return null;
+        Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
+        problem.updateProblem(request);
+        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
+        return problemResponse;
     }
 }

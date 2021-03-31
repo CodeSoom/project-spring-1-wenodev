@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -74,6 +75,7 @@ class ProblemServiceTest {
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
         ProblemResponseDto problemResponse = problemService.updateProblem(EXISTED_ID, problemRequest);
 
+        assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-3");
     }
 

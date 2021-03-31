@@ -1,5 +1,6 @@
 package com.weno.problem;
 
+import com.weno.problem.dto.ProblemRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,7 @@ public class Problem {
         this.title = title;
     }
 
+    public void updateProblem(ProblemRequestDto request) {
+        this.title = request.getTitle();
+    }
 }
