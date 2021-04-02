@@ -1,5 +1,6 @@
 package com.weno.content.dto;
 
+import com.weno.content.Content;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,14 @@ public class ContentResponseDto {
         this.question = question;
         this.answer = answer;
         this.userAnswer = userAnswer;
+    }
+
+    public static ContentResponseDto of(Content content) {
+        return ContentResponseDto.builder()
+                .id(content.getId())
+                .question(content.getQuestion())
+                .answer(content.getAnswer())
+                .userAnswer(content.getUserAnswer())
+                .build();
     }
 }
