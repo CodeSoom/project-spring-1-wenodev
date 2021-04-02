@@ -1,5 +1,6 @@
 package com.weno.content;
 
+import com.weno.content.dto.ContentResponseDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,7 +15,7 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
-    public void getContent(Long existed_id) {
-        return;
+    public ContentResponseDto getContent(Long existed_id) {
+        return null;
     }
 }
