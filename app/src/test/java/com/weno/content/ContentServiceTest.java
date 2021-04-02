@@ -9,6 +9,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ContentServiceTest {
 
@@ -33,8 +34,8 @@ class ContentServiceTest {
     void testGetContent(){
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
         ContentResponseDto contentResponseDto = contentService.getContent(EXISTED_ID);
-
         assertThat(contentResponseDto.getAnswer()).isEqualTo("dummy-test-answer-existed");
+        verify(contentRepository).findById(EXISTED_ID);
     }
 
 }
