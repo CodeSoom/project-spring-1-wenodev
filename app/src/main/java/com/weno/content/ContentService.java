@@ -13,4 +13,8 @@ public class ContentService {
     public ContentService(ContentRepository contentRepository) {
         this.contentRepository = contentRepository;
     }
+
+    public void getContent(Long existed_id) {
+        return;
+    }
 }
