@@ -8,4 +8,9 @@ import javax.transaction.Transactional;
 @Service
 public class ContentService {
 
+    private final ContentRepository contentRepository;
+
+    public ContentService(ContentRepository contentRepository) {
+        this.contentRepository = contentRepository;
+    }
 }
