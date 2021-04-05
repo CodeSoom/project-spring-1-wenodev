@@ -11,12 +11,11 @@ class ProblemTest {
 
     @BeforeEach
     void setUp(){
-        problem = new Problem("dummy-test-title");
+        problem = new Problem(1L,"dummy-test-title");
     }
 
     @Test
     void testTitle(){
         assertThat(problem.getTitle()).isEqualTo("dummy-test-title");
     }
-
 }

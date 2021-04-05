@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class ProblemService {
 
@@ -38,6 +39,20 @@ public class ProblemService {
     public ProblemResponseDto saveProblem(ProblemRequestDto request) {
         Problem problem = ProblemRequestDto.toEntity(request);
         problemRepository.save(problem);
+        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
+        return problemResponse;
+    }
+
+    public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
+        Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
+        problem.updateProblem(request);
+        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
+        return problemResponse;
+    }
+
+    public ProblemResponseDto deleteProblem(Long id) {
+        Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
+        problemRepository.delete(problem);
         ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
         return problemResponse;
     }

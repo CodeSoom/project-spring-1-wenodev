@@ -27,9 +27,9 @@ class ProblemServiceTest {
         problemRepository = mock(ProblemRepository.class);
         problemService = new ProblemService(problemRepository);
         problem = Problem.builder()
+                .id(EXISTED_ID)
                 .title("dummy-test-title")
                 .build();
-
     }
 
     @Test
@@ -64,4 +64,24 @@ class ProblemServiceTest {
         verify(problemRepository).save(any(Problem.class));
     }
 
+    @Test
+    void testUpdateProblem(){
+        ProblemRequestDto problemRequest = ProblemRequestDto.builder()
+                .title("dummy-test-title-3")
+                .build();
+
+        given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        ProblemResponseDto problemResponse = problemService.updateProblem(EXISTED_ID, problemRequest);
+
+        assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-3");
+    }
+
+    @Test
+    void testDeleteProblem(){
+        given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        ProblemResponseDto problemResponse = problemService.deleteProblem(EXISTED_ID);
+
+        assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
+    }
 }

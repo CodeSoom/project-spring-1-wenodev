@@ -7,8 +7,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProblemController.class)
@@ -41,5 +43,19 @@ class ProblemControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"title\" : \"dummy-test-title\"}"))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void testUpdateProblem() throws Exception {
+        mockMvc.perform(put(BASE_URL + "/" + EXITED_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\" : \"dummy-test-title\"}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testDeleteProblem() throws Exception {
+        mockMvc.perform(delete(BASE_URL + "/" + EXITED_ID))
+                .andExpect(status().isNoContent());
     }
 }

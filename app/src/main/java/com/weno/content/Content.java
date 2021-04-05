@@ -1,6 +1,5 @@
-package com.weno.problem;
+package com.weno.content;
 
-import com.weno.problem.dto.ProblemRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +13,26 @@ import javax.persistence.Id;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Problem {
+public class Content {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String title;
+    private String question;
+
+    @Column
+    private String answer;
+
+    @Column
+    private String userAnswer;
 
     @Builder
-    public Problem(Long id, String title) {
+    public Content(Long id, String question, String answer, String userAnswer) {
         this.id = id;
-        this.title = title;
-    }
-
-    public void updateProblem(ProblemRequestDto request) {
-        this.title = request.getTitle();
+        this.question = question;
+        this.answer = answer;
+        this.userAnswer = userAnswer;
     }
 }
