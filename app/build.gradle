@@ -1,0 +1,43 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+
+    // Spring
+    id 'org.springframework.boot' version '2.4.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+repositories {
+    // Use JCenter for resolving dependencies.
+    jcenter()
+}
+
+dependencies {
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    // Spring Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+
+    // Spring Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Boot Test
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.weno.App'
+}
+
+tasks.named('test') {
+    // Use junit platform for unit tests.
+    useJUnitPlatform()
+}
