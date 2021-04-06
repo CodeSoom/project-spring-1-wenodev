@@ -18,7 +18,6 @@ public class ContentService {
 
     public ContentResponseDto getContent(Long id) {
         Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
-        ContentResponseDto contentResponseDto = ContentResponseDto.of(content);
-        return contentResponseDto;
+        return ContentResponseDto.of(content);
     }
 }
