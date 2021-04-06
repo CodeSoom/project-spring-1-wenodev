@@ -23,10 +23,9 @@ public class ProblemService {
         List<Problem> problems = problemRepository.findAll();
         List<ProblemResponseDto> responses = new ArrayList<>();
         for (Problem problem : problems){
-            ProblemResponseDto response = ProblemResponseDto.builder()
+            responses.add(ProblemResponseDto.builder()
                     .title(problem.getTitle())
-                    .build();
-            responses.add(response);
+                    .build());
         }
         return responses;
     }
@@ -39,21 +38,18 @@ public class ProblemService {
     public ProblemResponseDto saveProblem(ProblemRequestDto request) {
         Problem problem = ProblemRequestDto.toEntity(request);
         problemRepository.save(problem);
-        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
-        return problemResponse;
+        return ProblemResponseDto.of(problem);
     }
 
     public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         problem.updateProblem(request);
-        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
-        return problemResponse;
+        return ProblemResponseDto.of(problem);
     }
 
     public ProblemResponseDto deleteProblem(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         problemRepository.delete(problem);
-        ProblemResponseDto problemResponse = ProblemResponseDto.of(problem);
-        return problemResponse;
+        return ProblemResponseDto.of(problem);
     }
 }
