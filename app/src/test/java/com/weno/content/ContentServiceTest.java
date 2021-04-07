@@ -76,7 +76,7 @@ class ContentServiceTest {
                 .build();
 
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
-        ContentResponseDto contentResponse = contentService.updateContent(request);
+        ContentResponseDto contentResponse = contentService.updateContent(EXISTED_ID, request);
         assertThat(contentResponse).isNull();
     }
 

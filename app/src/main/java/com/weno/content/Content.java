@@ -35,4 +35,10 @@ public class Content {
         this.answer = answer;
         this.userAnswer = userAnswer;
     }
+
+    public void updateContent(String question, String answer, String userAnswer) {
+        this.question = question;
+        this.answer = answer;
+        this.userAnswer = userAnswer;
+    }
 }

@@ -34,7 +34,9 @@ public class ContentService {
         return ContentResponseDto.of(content);
     }
 
-    public ContentResponseDto updateContent(ContentRequestDto request) {
+    public ContentResponseDto updateContent(Long id, ContentRequestDto request) {
+        Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
+        content.updateContent(content.getQuestion(), content.getAnswer(), content.getUserAnswer());
         return null;
     }
 }
