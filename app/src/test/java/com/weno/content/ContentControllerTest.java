@@ -9,7 +9,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+/*
+1. getAllContent
+2. saveContent
+3. updateContent
+4. deleteContent
+ */
 @WebMvcTest(ContentController.class)
 class ContentControllerTest {
 
@@ -36,6 +41,12 @@ class ContentControllerTest {
     @Test
     void testGetContent() throws Exception {
         mockMvc.perform(get(BASE_URL + "/" + EXISTED_ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetAllContent() throws Exception {
+        mockMvc.perform(get(BASE_URL))
                 .andExpect(status().isOk());
     }
 
