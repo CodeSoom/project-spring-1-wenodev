@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 /*
 1. getAllContent : 완료
@@ -67,7 +68,7 @@ class ContentControllerTest {
 
     @Test
     void testUpdateContent() throws Exception {
-        mockMvc.perform(post(BASE_URL + "/" + EXISTED_ID)
+        mockMvc.perform(put(BASE_URL + "/" + EXISTED_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("    {\n" +
                         "        \"answer\" : \"dummy-test-answer-update\",\n" +
