@@ -45,6 +45,7 @@ public class ContentController {
         return contentService.updateContent(id, request);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ContentResponseDto deleteContent(@PathVariable Long id){
         return contentService.deleteContent(id);
