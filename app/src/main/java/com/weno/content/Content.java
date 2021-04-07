@@ -37,11 +37,12 @@ public class Content {
     private Problem problem;
 
     @Builder
-    public Content(Long id, String question, String answer, String userAnswer) {
+    public Content(Long id, String question, String answer, String userAnswer, Problem problem) {
         this.id = id;
         this.question = question;
         this.answer = answer;
         this.userAnswer = userAnswer;
+        this.problem = problem;
     }
 
     public void updateContent(String question, String answer, String userAnswer) {
