@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 /*
 1. getAllContent : 완료
@@ -48,6 +50,19 @@ class ContentControllerTest {
     void testGetAllContent() throws Exception {
         mockMvc.perform(get(BASE_URL))
                 .andExpect(status().isOk());
+    }
+
+
+    @Test
+    void testSaveContent() throws Exception {
+        mockMvc.perform(post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("    {\n" +
+                        "        \"answer\" : \"dummy-test-answer-new\",\n" +
+                        "        \"question\" : \"dummy-test-question-new\",\n" +
+                        "        \"userAnswer\" : \"dummy-test-userAnswer-existed\"\n" +
+                        "    }"))
+                .andExpect(status().isCreated());
     }
 
 }
