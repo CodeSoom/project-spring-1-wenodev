@@ -10,8 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 /*
-1. getAllContent
-2. saveContent
+1. getAllContent : 완료
+2. saveContent :
 3. updateContent
 4. deleteContent
  */

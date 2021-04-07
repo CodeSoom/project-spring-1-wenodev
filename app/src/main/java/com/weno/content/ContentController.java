@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequestMapping("/api/v1/content")
 @RestController
 public class ContentController {
@@ -18,6 +20,11 @@ public class ContentController {
     @GetMapping("/{id}")
     public ContentResponseDto getContent(@PathVariable Long id){
         return contentService.getContent(id);
+    }
+
+    @GetMapping
+    public List<ContentResponseDto> getAllContent(){
+        return contentService.getAllContents();
     }
 
 }
