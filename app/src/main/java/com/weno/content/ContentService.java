@@ -5,6 +5,7 @@ import com.weno.content.exception.ContentNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 @Service
@@ -19,5 +20,9 @@ public class ContentService {
     public ContentResponseDto getContent(Long id) {
         Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
         return ContentResponseDto.of(content);
+    }
+
+    public List<ContentResponseDto> getAllContents() {
+        return null;
     }
 }
