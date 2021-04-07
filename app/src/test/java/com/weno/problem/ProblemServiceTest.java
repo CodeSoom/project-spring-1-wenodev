@@ -1,5 +1,6 @@
 package com.weno.problem;
 
+import com.weno.content.ContentRepository;
 import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.verify;
 
 class ProblemServiceTest {
 
+    private ContentRepository contentRepository;
     private ProblemRepository problemRepository;
     private ProblemService problemService;
     private Problem problem;
@@ -24,8 +26,9 @@ class ProblemServiceTest {
 
     @BeforeEach
     void setUp(){
+        contentRepository = mock(ContentRepository.class);
         problemRepository = mock(ProblemRepository.class);
-        problemService = new ProblemService(problemRepository);
+        problemService = new ProblemService(problemRepository, contentRepository);
         problem = Problem.builder()
                 .id(EXISTED_ID)
                 .title("dummy-test-title")
