@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 /*
 1. getAllContent : 완료
-2. saveContent :
-3. updateContent
+2. saveContent : 완료
+3. updateContent :
 4. deleteContent
  */
 @WebMvcTest(ContentController.class)
@@ -63,6 +63,18 @@ class ContentControllerTest {
                         "        \"userAnswer\" : \"dummy-test-userAnswer-existed\"\n" +
                         "    }"))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void testUpdateContent() throws Exception {
+        mockMvc.perform(post(BASE_URL + "/" + EXISTED_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("    {\n" +
+                        "        \"answer\" : \"dummy-test-answer-update\",\n" +
+                        "        \"question\" : \"dummy-test-question-update\",\n" +
+                        "        \"userAnswer\" : \"dummy-test-userAnswer-update\"\n" +
+                        "    }"))
+                .andExpect(status().isOk());
     }
 
 }
