@@ -1,5 +1,6 @@
 package com.weno.content;
 
+import com.weno.content.dto.ContentRequestDto;
 import com.weno.content.dto.ContentResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,11 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 /*
-1. getAllContent
+1. getAllContent : 완료
 2. saveContent
 3. updateContent
 4. deleteContent
@@ -50,6 +52,19 @@ class ContentServiceTest {
         List<ContentResponseDto> contentResponseList = contentService.getAllContents();
         assertThat(contentResponseList.get(0).getId()).isEqualTo(EXISTED_ID);
         verify(contentRepository).findAll();
+    }
+
+    @Test
+    void testSaveContent(){
+        ContentRequestDto request = ContentRequestDto.builder()
+                .answer("dummy-test-answer-new")
+                .question("dummy-test-question-new")
+                .userAnswer("dummy-test-userAnswer-new")
+                .build();
+
+        given(contentRepository.save(any(Content.class))).willReturn(content);
+        ContentResponseDto contentResponse = contentService.saveContent(request);
+        assertThat(contentResponse.getAnswer()).isEqualTo("dummy-test-answer-new");
     }
 
 
