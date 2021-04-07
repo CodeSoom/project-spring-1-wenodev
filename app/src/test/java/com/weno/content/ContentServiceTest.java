@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 /*
 1. getAllContent : 완료
-2. saveContent
+2. saveContent : 완료
 3. updateContent
 4. deleteContent
  */
@@ -65,6 +65,19 @@ class ContentServiceTest {
         given(contentRepository.save(any(Content.class))).willReturn(content);
         ContentResponseDto contentResponse = contentService.saveContent(request);
         assertThat(contentResponse.getAnswer()).isEqualTo("dummy-test-answer-new");
+    }
+
+    @Test
+    void testUpdateContent(){
+        ContentRequestDto request = ContentRequestDto.builder()
+                .answer("dummy-test-answer-update")
+                .question("dummy-test-question-update")
+                .userAnswer("dummy-test-userAnswer-update")
+                .build();
+
+        given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
+        ContentResponseDto contentResponse = contentService.updateContent(request);
+        assertThat(contentResponse).isNull();
     }
 
 

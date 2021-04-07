@@ -33,4 +33,8 @@ public class ContentService {
         contentRepository.save(content);
         return ContentResponseDto.of(content);
     }
+
+    public ContentResponseDto updateContent(ContentRequestDto request) {
+        return null;
+    }
 }
