@@ -41,6 +41,8 @@ public class ContentService {
     }
 
     public ContentResponseDto deleteContent(Long id) {
-        return null;
+        Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
+        contentRepository.delete(content);
+        return ContentResponseDto.of(content);
     }
 }
