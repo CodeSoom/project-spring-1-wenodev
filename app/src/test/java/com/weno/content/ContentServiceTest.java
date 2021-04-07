@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 /*
 1. getAllContent : 완료
 2. saveContent : 완료
-3. updateContent
+3. updateContent : 완료
 4. deleteContent
  */
 class ContentServiceTest {
@@ -77,6 +77,13 @@ class ContentServiceTest {
 
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
         ContentResponseDto contentResponse = contentService.updateContent(EXISTED_ID, request);
+        assertThat(contentResponse.getAnswer()).isEqualTo("dummy-test-answer-update");
+    }
+
+    @Test
+    void deleteContent(){
+        given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
+        ContentResponseDto contentResponse = contentService.deleteContent(EXISTED_ID);
         assertThat(contentResponse).isNull();
     }
 
