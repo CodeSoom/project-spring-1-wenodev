@@ -3,6 +3,7 @@ package com.weno.content;
 import com.weno.content.dto.ContentRequestDto;
 import com.weno.content.dto.ContentResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,11 @@ public class ContentController {
     @PutMapping("/{id}")
     public ContentResponseDto updateContent(@PathVariable Long id, @RequestBody ContentRequestDto request){
         return contentService.updateContent(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public ContentResponseDto deleteContent(@PathVariable Long id){
+        return contentService.deleteContent(id);
     }
 
 }
