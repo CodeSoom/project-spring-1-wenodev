@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /*
 1. getAllContent : 완료
 2. saveContent : 완료
-3. updateContent :
+3. updateContent : 완료
 4. deleteContent
  */
 @WebMvcTest(ContentController.class)
@@ -76,6 +77,12 @@ class ContentControllerTest {
                         "        \"userAnswer\" : \"dummy-test-userAnswer-update\"\n" +
                         "    }"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testDeleteContent() throws Exception {
+        mockMvc.perform(delete(BASE_URL + "/" + EXISTED_ID))
+                .andExpect(status().isNoContent());
     }
 
 }
