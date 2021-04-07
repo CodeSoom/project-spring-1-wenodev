@@ -48,7 +48,8 @@ class ContentServiceTest {
     void testGetAllContents(){
         given(contentRepository.findAll()).willReturn(List.of(content));
         List<ContentResponseDto> contentResponseList = contentService.getAllContents();
-        assertThat(contentResponseList).isNull();
+        assertThat(contentResponseList.get(0).getId()).isEqualTo(EXISTED_ID);
+        verify(contentRepository).findAll();
     }
 
 

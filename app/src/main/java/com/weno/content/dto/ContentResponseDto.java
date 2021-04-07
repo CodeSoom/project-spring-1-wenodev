@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 public class ContentResponseDto {
@@ -28,5 +31,14 @@ public class ContentResponseDto {
                 .answer(content.getAnswer())
                 .userAnswer(content.getUserAnswer())
                 .build();
+    }
+
+    public static List<ContentResponseDto> ofList(List<Content> contents) {
+
+        List<ContentResponseDto> contentResponseList = new ArrayList<>();
+        for (Content content : contents){
+            contentResponseList.add(ContentResponseDto.of(content));
+        }
+        return contentResponseList;
     }
 }

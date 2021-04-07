@@ -23,6 +23,7 @@ public class ContentService {
     }
 
     public List<ContentResponseDto> getAllContents() {
-        return null;
+        List<Content> contents = contentRepository.findAll();
+        return ContentResponseDto.ofList(contents);
     }
 }
