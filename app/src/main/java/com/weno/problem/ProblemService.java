@@ -2,6 +2,7 @@ package com.weno.problem;
 
 import com.weno.content.Content;
 import com.weno.content.ContentRepository;
+import com.weno.content.dto.ContentRequestDto;
 import com.weno.content.dto.ContentResponseDto;
 import com.weno.content.exception.ContentNotFoundException;
 import com.weno.problem.dto.ProblemRequestDto;
@@ -45,7 +46,10 @@ public class ProblemService {
     public ProblemResponseDto saveProblem(ProblemRequestDto request) {
         Problem problem = ProblemRequestDto.toEntity(request);
         problemRepository.save(problem);
-        List<Content> contents = contentRepository.findAllByProblem(problem);
+
+        List<Content> contents = ContentRequestDto.toEntityList(request.getContents());
+
+
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
     }
 
