@@ -70,7 +70,6 @@ class ProblemServiceTest {
     void testSaveProblem(){
 
         ContentRequestDto contentRequestDto = ContentRequestDto.builder()
-                .id(EXISTED_ID)
                 .answer("dummy-test-answer-new")
                 .question("dummy-test-question-new")
                 .userAnswer("dummy-test-userAnswer-new")
