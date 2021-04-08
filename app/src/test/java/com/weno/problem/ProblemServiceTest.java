@@ -85,7 +85,8 @@ class ProblemServiceTest {
         given(contentRepository.save(any(Content.class))).willReturn(content);
         ProblemResponseDto problemResponse = problemService.saveProblem(problemRequest);
 
-        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-2");
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-new");
+        assertThat(problemResponse.getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-new");
         verify(problemRepository).save(any(Problem.class));
     }
 
