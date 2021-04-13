@@ -30,8 +30,10 @@ public class ProblemService {
         List<Problem> problems = problemRepository.findAll();
         List<ProblemResponseDto> responses = new ArrayList<>();
         for (Problem problem : problems){
+            List<Content> contents = contentRepository.findAllByProblem(problem);
             responses.add(ProblemResponseDto.builder()
                     .title(problem.getTitle())
+                    .contents(ContentResponseDto.ofList(contents))
                     .build());
         }
         return responses;
