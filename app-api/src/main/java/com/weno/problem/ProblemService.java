@@ -73,5 +73,6 @@ public class ProblemService {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         problemRepository.delete(problem);
         List<Content> contents = contentRepository.findAllByProblem(problem);
-        return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));    }
+        return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
+    }
 }
