@@ -47,6 +47,9 @@ public class ProblemService {
         problemRepository.save(problem);
 
         List<Content> contents = ContentRequestDto.toEntityList(request.getContents());
+        for (Content content : contents){
+            content.updateProblem(problem);
+        }
         contentRepository.saveAll(contents);
 
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));

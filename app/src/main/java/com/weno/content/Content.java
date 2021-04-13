@@ -50,4 +50,8 @@ public class Content {
         this.answer = answer;
         this.userAnswer = userAnswer;
     }
+
+    public void updateProblem(Problem problem) {
+        this.problem = problem;
+    }
 }
