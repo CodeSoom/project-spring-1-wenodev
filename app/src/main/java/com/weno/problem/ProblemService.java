@@ -57,9 +57,10 @@ public class ProblemService {
 
     public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
-        problem.updateProblem(request);
+        problem.updateProblem(request.getTitle());
         List<Content> contents = contentRepository.findAllByProblem(problem);
-        return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));    }
+        return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
+    }
 
     public ProblemResponseDto deleteProblem(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
