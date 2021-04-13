@@ -1,6 +1,7 @@
+import React from 'react';
 import ProblemList from './components/ProblemList';
 import ProblemDetail from './components/ProblemDetail'
-import Route from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (

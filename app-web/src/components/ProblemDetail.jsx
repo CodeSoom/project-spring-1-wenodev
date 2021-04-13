@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import * as API from '../services/api'
+import { withRouter } from "react-router";
 
-export default function ProblemDetail({match}){
+
+function ProblemDetail({match}){
 
     const[problem, setProblem] = useState(null);
 
@@ -32,3 +34,4 @@ export default function ProblemDetail({match}){
     )
 }
 
+export default withRouter(ProblemDetail);
