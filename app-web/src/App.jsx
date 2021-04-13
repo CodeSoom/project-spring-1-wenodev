@@ -1,9 +1,9 @@
-import ProblemListPage from './components/ProblemListPage';
+import ProblemList from './components/ProblemList';
 
 function App() {
   return (
     <div>
-      <ProblemListPage/>
+      <ProblemList/>
     </div>
   );
 }
