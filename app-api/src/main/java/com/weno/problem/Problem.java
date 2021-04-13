@@ -29,7 +29,7 @@ public class Problem {
         this.title = title;
     }
 
-    public void updateProblem(ProblemRequestDto request) {
-        this.title = request.getTitle();
+    public void updateProblem(String title) {
+        this.title = title;
     }
 }

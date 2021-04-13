@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'soomtudy'
-include('app')
+include('app-api')
