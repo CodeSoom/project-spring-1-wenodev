@@ -58,7 +58,14 @@ public class ProblemService {
     public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         problem.updateProblem(request.getTitle());
-        List<Content> contents = contentRepository.findAllByProblem(problem);
+
+        List<Content> contents = ContentRequestDto.toEntityList(request.getContents());
+        for (Content newContent : contents){
+            Content content = contentRepository.findById(newContent.getId()).orElseThrow(()->new ContentNotFoundException("no content id : " + newContent.getId()));
+            content.updateContent(newContent.getQuestion(), newContent.getAnswer(), newContent.getUserAnswer());
+            contentRepository.save(content);
+        }
+
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
     }
 
