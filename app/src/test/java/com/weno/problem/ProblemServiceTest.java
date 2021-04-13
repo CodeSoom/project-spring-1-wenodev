@@ -35,7 +35,7 @@ class ProblemServiceTest {
 
         problem = Problem.builder()
                 .id(EXISTED_ID)
-                .title("dummy-test-title")
+                .title("dummy-test-title-existed")
                 .build();
 
         content = Content.builder()
@@ -55,7 +55,7 @@ class ProblemServiceTest {
 
         List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
 
-        assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title");
+        assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title-existed");
         assertThat(problemResponses.get(0).getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-existed");
         verify(problemRepository).findAll();
     }
@@ -65,7 +65,7 @@ class ProblemServiceTest {
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
         ProblemResponseDto problemResponse = problemService.getProblem(EXISTED_ID);
 
-        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title");
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-existed");
         verify(problemRepository).findById(EXISTED_ID);
     }
 
@@ -94,15 +94,25 @@ class ProblemServiceTest {
 
     @Test
     void testUpdateProblem(){
+
+        ContentRequestDto contentRequestDto = ContentRequestDto.builder()
+                .id(EXISTED_ID)
+                .answer("dummy-test-answer-update")
+                .question("dummy-test-question-update")
+                .userAnswer("dummy-test-userAnswer-update")
+                .build();
+
         ProblemRequestDto problemRequest = ProblemRequestDto.builder()
-                .title("dummy-test-title-3")
+                .title("dummy-test-title-update")
+                .contents(List.of(contentRequestDto))
                 .build();
 
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
+        given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
         ProblemResponseDto problemResponse = problemService.updateProblem(EXISTED_ID, problemRequest);
 
-        assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
-        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-3");
+        assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-update");
+        assertThat(problemResponse.getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-update");
     }
 
     @Test
