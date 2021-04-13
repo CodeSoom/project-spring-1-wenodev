@@ -51,9 +51,12 @@ class ProblemServiceTest {
     void testGetAllProblems(){
         List<Problem> problems = Arrays.asList(problem);
         given(problemRepository.findAll()).willReturn(problems);
+        given(contentRepository.findAllByProblem(problem)).willReturn(List.of(content));
+
         List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
 
         assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title");
+        assertThat(problemResponses.get(0).getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-existed");
         verify(problemRepository).findAll();
     }
 
