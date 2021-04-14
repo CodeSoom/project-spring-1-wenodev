@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import ContentForm from './ContentForm';
 import ContentList from './ContentList';
+import * as API from '../services/api';
 
-export default function ProblemForm() {
+export default function ProblemForm(props) {
 
   const [title, setTitle] = useState()
 
@@ -48,11 +49,18 @@ export default function ProblemForm() {
   }
 
   function submitProblem(){
-    const problems = {
+    const data = {
       title : title,
       contents : contents
     }
-    console.log(problems);
+
+    API.postProblem(data)
+    .then((response) =>{
+      props.history.push('/');
+    })
+    .catch((e) => {
+      console.log(e);
+    })
   }
 
   return(
