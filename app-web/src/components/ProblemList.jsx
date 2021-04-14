@@ -23,7 +23,7 @@ export default function ProblemListPage() {
 
     return(
         <div>
-            <Link to="/problems/form">
+            <Link to="/form">
                 <button>문제 출제하기</button>
             </Link>
         <ul>

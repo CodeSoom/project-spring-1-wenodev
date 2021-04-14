@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import { withRouter } from 'react-router';
 import * as API from '../services/api'
-import { withRouter } from "react-router";
 
 
-function ProblemDetail({match}){
+ function ProblemDetail({match}){
 
     const[problem, setProblem] = useState(null);
 
@@ -15,6 +15,7 @@ function ProblemDetail({match}){
         .catch((e) => {
             console.log(e);
         })
+   
     }, [])
 
     if(!problem || !problem.contents){
