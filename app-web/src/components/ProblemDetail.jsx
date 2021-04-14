@@ -17,7 +17,7 @@ function ProblemDetail({match}){
         })
     }, [])
 
-    if(problem){
+    if(!problem){
         return null;
     }
 

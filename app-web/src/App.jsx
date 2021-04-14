@@ -1,13 +1,13 @@
 import React from 'react';
 import ProblemList from './components/ProblemList';
-import ProblemDetail from './components/ProblemDetail'
+import ProblemDetail from './components/ProblemDetail';
 import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <Route expact component={ProblemList} path="/" />
-      <Route expact component={ProblemDetail} path="/problems/:id" />
+      <Route exact component={ProblemList} path="/" />
+      <Route exact component={ProblemDetail} path="/problems/:id" />
     </div>
   );
 }
