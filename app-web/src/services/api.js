@@ -12,3 +12,15 @@ export async function fetchProblem(id) {
   return data;
 }
 
+export async function postProblem(problem) {
+  const url = "http://localhost:8080/api/v1/problems";
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(problem)
+  });
+  const data = await response.json();
+  return data;
+}
