@@ -27,7 +27,7 @@ export default function ProblemListPage() {
                 <div key={problem.id}>
                 <li>{problem.id}</li>
                 <li>{problem.title}</li>
-                <Link to={`/product/${problem.id}`}>
+                <Link to={`/problems/${problem.id}`}>
                     <button>문제 풀기</button>
                 </Link>
                 </div>

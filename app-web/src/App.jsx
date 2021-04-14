@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Route expact component={ProblemList} path="/" />
-      <Route expact component={ProblemDetail} path="/problem/:id" />
+      <Route expact component={ProblemDetail} path="/problems/:id" />
     </div>
   );
 }
