@@ -27,9 +27,10 @@ import * as API from '../services/api'
             <li>{problem.id}</li>
             <li>{problem.title}</li>
             {problem.contents.map((content) =>(
-                <ul key={content.id}>
-                    <li>{content.question}</li>
-                </ul>
+                <div key={content.id}>
+                    <div>질문 : {content.question}</div>
+                    <label>답변 : </label> <input type="text" />
+                </div>
             ))}
         </ul>    
     )
