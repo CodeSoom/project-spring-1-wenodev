@@ -22,6 +22,10 @@ export default function ProblemListPage() {
     }
 
     return(
+        <div>
+            <Link to="/problems/form">
+                <button>문제 출제하기</button>
+            </Link>
         <ul>
             {problems.map((problem) =>(
                 <div key={problem.id}>
@@ -32,6 +36,7 @@ export default function ProblemListPage() {
                 </Link>
                 </div>
             ))}
-        </ul>    
+        </ul>
+        </div>    
     );
 }
