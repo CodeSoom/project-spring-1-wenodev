@@ -8,9 +8,10 @@ import { Route } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <Route exact component={ProblemList} path="/" />
-      <Route exact component={ProblemDetail} path="/problems/:id" />
-      <Route exact component={ProblemForm} path="/problems/form" />
+      <Route exact path="/" component={ProblemList} />
+      <Route exact path="/problems" component={ProblemList} />
+      <Route exact path="/problems/:id" component={ProblemDetail} />
+      <Route exact path="/form" component={ProblemForm} />
     </div>
   );
 }
