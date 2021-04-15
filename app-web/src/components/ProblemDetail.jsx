@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router';
 import * as API from '../services/api'
 
- function ProblemDetail({match}){
+ function ProblemDetail({match}, props){
 
     const[problem, setProblem] = useState(null);
     const[answer, setAnswer] = useState([]);
@@ -38,6 +38,10 @@ import * as API from '../services/api'
         API.putProblem(data)
         .then((response) => {
             console.log(response);
+            props.history.push('/result');
+        })
+        .catch(e => {
+            console.log(e);
         })
         
     }
