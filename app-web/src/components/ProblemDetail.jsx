@@ -30,7 +30,16 @@ import * as API from '../services/api'
     }
 
     function submitAnswer(){
-        console.log(answer);
+        const data = {
+            id : match.params.id,
+            contents : answer
+        }
+
+        API.putProblem(data)
+        .then((response) => {
+            console.log(response);
+        })
+        
     }
 
     if(!problem || !problem.contents){
