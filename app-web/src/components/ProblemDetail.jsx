@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router';
 import * as API from '../services/api'
 
- function ProblemDetail({match}, props){
+ function ProblemDetail({match, history}){
 
     const[problem, setProblem] = useState(null);
     const[answer, setAnswer] = useState([]);
@@ -32,13 +32,14 @@ import * as API from '../services/api'
     function submitAnswer(){
         const data = {
             id : match.params.id,
+            title : problem.title,
             contents : answer
         }
 
         API.putProblem(data)
         .then((response) => {
             console.log(response);
-            props.history.push('/result');
+            history.push('/result/' + match.params.id);
         })
         .catch(e => {
             console.log(e);
