@@ -1,5 +1,6 @@
 package com.weno.user.dto;
 
+import com.weno.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,13 @@ public class UserRequestDto {
         this.email = email;
         this.name = name;
         this.password = password;
+    }
+
+    public static User toEntity(UserRequestDto userRequestDto) {
+        return User.builder()
+                .email(userRequestDto.getEmail())
+                .name(userRequestDto.getName())
+                .password(userRequestDto.getPassword())
+                .build();
     }
 }
