@@ -3,6 +3,7 @@ package com.weno.auth;
 import com.weno.user.User;
 import com.weno.user.UserRepository;
 import com.weno.user.dto.UserRequestDto;
+import com.weno.user.dto.UserResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,8 +48,8 @@ class AuthServiceTest {
     @Test
     void testCreate(){
         given(userRepository.save(any(User.class))).willReturn(newUser);
-        User user = authService.create(userRequestDto);
-        assertThat(user.getId()).isEqualTo(EXISTED_ID);
+        UserResponseDto userResponseDto = authService.create(userRequestDto);
+        assertThat(userResponseDto.getId()).isEqualTo(CREATED_ID);
     }
 
 }
