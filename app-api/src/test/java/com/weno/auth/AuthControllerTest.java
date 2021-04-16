@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,7 +21,13 @@ class AuthControllerTest {
 
     @Test
     void testCreate() throws Exception {
-        mockMvc.perform(post("/register"))
+        mockMvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("    {\n" +
+                        "        \"email\" : \"weno@codesoom.com\",\n" +
+                        "        \"name\" : \"weno\",\n" +
+                        "        \"passsword\" : \"code1234soom\"\n" +
+                        "    }"))
                 .andExpect(status().isCreated());
     }
 
