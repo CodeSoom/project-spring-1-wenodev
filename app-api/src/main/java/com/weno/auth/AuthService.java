@@ -1,5 +1,6 @@
 package com.weno.auth;
 
+import com.weno.auth.dto.UserResultData;
 import com.weno.user.User;
 import com.weno.user.UserRepository;
 import com.weno.user.dto.UserRequestDto;
@@ -24,6 +25,13 @@ public class AuthService {
     }
 
     public UserResponseDto createToken(UserRequestDto userRequestDto) {
+        UserResultData userResultData = authenticateUser(
+                userRequestDto.getEmail(),
+                userRequestDto.getPassword());
+        return null;
+    }
+
+    public UserResultData authenticateUser(String email, String password) {
         return null;
     }
 }
