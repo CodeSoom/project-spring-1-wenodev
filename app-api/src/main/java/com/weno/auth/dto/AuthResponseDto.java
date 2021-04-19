@@ -1,10 +1,12 @@
 package com.weno.auth.dto;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @NoArgsConstructor
-@Builder
+@Getter
 public class AuthResponseDto {
     private String accessToken;
 
