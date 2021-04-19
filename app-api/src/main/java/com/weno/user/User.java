@@ -35,4 +35,8 @@ public class User {
         this.name = name;
         this.password = password;
     }
+
+    public boolean authenticate(String password){
+        return this.password.equals(password) ? true : false;
+    }
 }
