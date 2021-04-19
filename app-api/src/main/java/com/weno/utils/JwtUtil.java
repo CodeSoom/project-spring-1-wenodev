@@ -1,5 +1,6 @@
 package com.weno.utils;
 
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,10 @@ public class JwtUtil {
     }
 
 
-    public static String encode(String email) {
-        return null;
+    public String encode(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .signWith(key)
+                .compact();
     }
 }

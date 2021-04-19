@@ -19,12 +19,12 @@ class JwtUtilTest {
 
     @BeforeEach
     void setUp(){
-        key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        jwtUtil = new JwtUtil(SECRET);
     }
 
     @Test
     void testEncode(){
-        String token = JwtUtil.encode(EMAIL);
+        String token = jwtUtil.encode(EMAIL);
         assertThat(token).isEqualTo(TOKEN);
     }
 
