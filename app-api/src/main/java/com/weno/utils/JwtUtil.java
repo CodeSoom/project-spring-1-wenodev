@@ -15,4 +15,8 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+
+    public static String encode(String email) {
+        return null;
+    }
 }
