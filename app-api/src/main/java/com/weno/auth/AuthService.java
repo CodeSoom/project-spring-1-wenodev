@@ -1,6 +1,7 @@
 package com.weno.auth;
 
 import com.weno.auth.dto.UserResultData;
+import com.weno.auth.exception.AuthenticationBadRequestException;
 import com.weno.user.User;
 import com.weno.user.UserRepository;
 import com.weno.user.dto.UserRequestDto;
@@ -32,6 +33,9 @@ public class AuthService {
     }
 
     public UserResultData authenticateUser(String email, String password) {
-        return null;
+        return userRepository.findByEmail(email)
+                .filter(user -> user.authenticate(password))
+                .map(UserResultData::of)
+                .orElseThrow(AuthenticationBadRequestException::new);
     }
 }
