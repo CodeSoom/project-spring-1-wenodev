@@ -20,13 +20,25 @@ class AuthControllerTest {
     private AuthService authService;
 
     @Test
+    void testLogin() throws Exception {
+        mockMvc.perform(post("/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("    {\n" +
+                        "        \"email\" : \"weno@codesoom.com\",\n" +
+                        "        \"password\" : \"code1234soom\"\n" +
+                        "    }"))
+               .andExpect(status().isCreated());
+    }
+
+
+    @Test
     void testCreate() throws Exception {
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("    {\n" +
                         "        \"email\" : \"weno@codesoom.com\",\n" +
                         "        \"name\" : \"weno\",\n" +
-                        "        \"passsword\" : \"code1234soom\"\n" +
+                        "        \"password\" : \"code1234soom\"\n" +
                         "    }"))
                 .andExpect(status().isCreated());
     }
