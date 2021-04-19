@@ -5,6 +5,7 @@ import com.weno.user.User;
 import com.weno.user.UserRepository;
 import com.weno.user.dto.UserRequestDto;
 import com.weno.user.dto.UserResponseDto;
+import com.weno.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.mock;
 class AuthServiceTest {
 
     private UserRepository userRepository;
+    private JwtUtil jwtUtil;
     private AuthService authService;
     private UserRequestDto userRequestDto;
 
@@ -36,7 +38,9 @@ class AuthServiceTest {
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
-        authService = new AuthService(userRepository);
+        jwtUtil = mock(JwtUtil.class);
+
+        authService = new AuthService(userRepository, jwtUtil);
 
         userRequestDto = UserRequestDto.builder()
                 .email(CREATE_EMAIL)

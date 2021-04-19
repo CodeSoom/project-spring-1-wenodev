@@ -1,5 +1,6 @@
 package com.weno.auth;
 
+import com.weno.auth.dto.AuthResponseDto;
 import com.weno.user.dto.UserRequestDto;
 import com.weno.user.dto.UserResponseDto;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/login")
-    public UserResponseDto login(@RequestBody UserRequestDto userRequestDto) {
+    public AuthResponseDto login(@RequestBody UserRequestDto userRequestDto) {
         return authService.createToken(userRequestDto);
     }
 
