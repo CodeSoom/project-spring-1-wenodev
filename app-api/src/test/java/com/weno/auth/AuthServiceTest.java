@@ -48,7 +48,7 @@ class AuthServiceTest {
     @Test
     void testCreate(){
         given(userRepository.save(any(User.class))).willReturn(newUser);
-        UserResponseDto userResponseDto = authService.create(userRequestDto);
+        UserResponseDto userResponseDto = authService.register(userRequestDto);
         assertThat(userResponseDto.getId()).isEqualTo(CREATED_ID);
     }
 

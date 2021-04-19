@@ -18,8 +18,12 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public UserResponseDto create(UserRequestDto userRequestDto) {
+    public UserResponseDto register(UserRequestDto userRequestDto) {
         User user = UserRequestDto.toEntity(userRequestDto);
         return UserResponseDto.of(userRepository.save(user));
+    }
+
+    public UserResponseDto createToken(UserRequestDto userRequestDto) {
+        return null;
     }
 }

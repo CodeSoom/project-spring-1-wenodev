@@ -17,8 +17,14 @@ public class AuthController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/login")
+    public UserResponseDto login(@RequestBody UserRequestDto userRequestDto) {
+        return authService.createToken(userRequestDto);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public UserResponseDto create(@RequestBody UserRequestDto userRequestDto){
-        return authService.create(userRequestDto);
+    public UserResponseDto register(@RequestBody UserRequestDto userRequestDto){
+        return authService.register(userRequestDto);
     }
 }
