@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,8 +12,8 @@ public class UserAuthentication extends AbstractAuthenticationToken {
 
     private final String email;
 
-    public UserAuthentication(Collection<? extends GrantedAuthority> authorities, String email) {
-        super(authorities);
+    public UserAuthentication(List<Role> roles, String email) {
+        super(authorities(roles));
         this.email = email;
     }
 
