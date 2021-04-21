@@ -1,6 +1,7 @@
 package com.weno.auth;
 
 import com.weno.auth.dto.UserResultData;
+import com.weno.role.RoleRepository;
 import com.weno.user.User;
 import com.weno.user.UserRepository;
 import com.weno.user.dto.UserRequestDto;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.mock;
 
 class AuthServiceTest {
 
+    private RoleRepository roleRepository;
     private UserRepository userRepository;
     private JwtUtil jwtUtil;
     private AuthService authService;
@@ -35,12 +37,15 @@ class AuthServiceTest {
     private final static String CREATE_NAME = "test-name-created";
     private final static String CREATE_PASSWORD = "test-password-created";
 
+    private final String TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3ZW5vQGNvZGVzb29tLmNvbSJ9.weI7LH8ohPF56m8ngrGk_pXoviJdrPofupcfUVQoSHU";
+
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
+        roleRepository = mock(RoleRepository.class);
         jwtUtil = mock(JwtUtil.class);
 
-        authService = new AuthService(userRepository, jwtUtil);
+        authService = new AuthService(userRepository, roleRepository, jwtUtil);
 
         userRequestDto = UserRequestDto.builder()
                 .email(CREATE_EMAIL)
@@ -83,6 +88,11 @@ class AuthServiceTest {
         given(userRepository.findByEmail(EXISTED_EMAIL)).willReturn(Optional.of(existedUser));
         UserResultData userResultData = authService.authenticateUser(EXISTED_EMAIL, EXISTED_PASSWORD);
         assertThat(userResultData.getEmail()).isEqualTo(EXISTED_EMAIL);
+    }
+
+    @Test
+    void testParseToken(){
+        jwtUtil.decode(TOKEN);
     }
 
 }
