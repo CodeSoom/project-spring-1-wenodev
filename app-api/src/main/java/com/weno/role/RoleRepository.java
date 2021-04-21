@@ -1,2 +1,6 @@
-package com.weno.role;public interface RoleRepository {
+package com.weno.role;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
 }
