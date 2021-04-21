@@ -28,4 +28,9 @@ class JwtUtilTest {
         assertThat(token).isEqualTo(TOKEN);
     }
 
+    @Test
+    void testDecode(){
+        assertThat(jwtUtil.decode(TOKEN).getSubject()).isEqualTo(EMAIL);
+    }
+
 }
