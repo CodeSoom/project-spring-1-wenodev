@@ -1,9 +1,19 @@
-import ProblemListPage from './components/ProblemListPage';
+import React from 'react';
+import ProblemList from './components/ProblemList';
+import ProblemDetail from './components/ProblemDetail';
+import ProblemForm from './components/ProblemForm';
+import ProblemResult from './components/ProblemResult';
+
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <ProblemListPage/>
+      <Route exact path="/" component={ProblemList} />
+      <Route exact path="/problems" component={ProblemList} />
+      <Route exact path="/problems/:id" component={ProblemDetail} />
+      <Route exact path="/form" component={ProblemForm} />
+      <Route exact path="/result/:id" component={ProblemResult} />
     </div>
   );
 }
