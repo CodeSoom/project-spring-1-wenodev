@@ -1,6 +1,7 @@
 package com.weno.config;
 
 import com.weno.auth.AuthService;
+import com.weno.filters.AuthenticationErrorFilter;
 import com.weno.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         Filter authenticationFilter =  new JwtAuthenticationFilter(authenticationManager(), authService);
+        Filter authenticationErrorFilter = new AuthenticationErrorFilter();
 
         http
                 .csrf().disable()
@@ -30,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().disable()
                 .and()
                 .addFilter(authenticationFilter)
+                .addFilterBefore(authenticationErrorFilter, JwtAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
