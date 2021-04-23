@@ -37,3 +37,16 @@ export async function putProblem(problem) {
   const data = await response.json();
   return data;
 }
+
+export async function postUser(user){
+  const url = "http://localhost:8080/register";
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user)
+  });
+  const data = await response.json();
+  return data;
+}
