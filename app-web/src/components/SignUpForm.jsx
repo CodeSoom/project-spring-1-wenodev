@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import * as API from '../services/api';
 
-export default function SignUpForm(){
+export default function SignUpForm({history}){
     const [user, setUser] = useState({
-        email : null,
-        password : null,
-        name : null,
+        email : undefined,
+        password : undefined,
+        name : undefined,
     });
 
 
@@ -18,10 +18,19 @@ export default function SignUpForm(){
     }
 
     function submitUser(){
+        API.postUser(user)
+            .then(response => {
+                history.push("/")
+            })
+            .catch(e => {
+                console.error(e);
+            })
     }
     
     return(
     <div>
+        <h2>회원가입</h2>
+        <div>
         <label>이메일</label>
         <input 
             type="text" 
@@ -30,6 +39,8 @@ export default function SignUpForm(){
             value={user.email} 
             onChange={onChange} 
         />
+        </div>
+        <div>
         <label>비밀번호</label>
         <input 
             type="password" 
@@ -37,7 +48,9 @@ export default function SignUpForm(){
             placeholder="비밀번호를 입력하세요"
             value={user.password} 
             onChange={onChange}
-        />        
+        />
+        </div>
+        <div>
         <label>이름</label>
         <input 
             type="text" 
@@ -45,10 +58,9 @@ export default function SignUpForm(){
             placeholder="이름을 입력하세요"
             value={user.name} 
             onChange={onChange}
-        />       
+        />
+        </div>            
         <button type="submit" onClick={submitUser}>가입하기</button>
         </div>
-        
     )
-
 }
