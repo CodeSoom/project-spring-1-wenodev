@@ -5,6 +5,7 @@ import com.weno.auth.dto.UserResultData;
 import com.weno.auth.errors.AuthenticationBadRequestException;
 import com.weno.auth.errors.UserEmailDuplicatedException;
 import com.weno.role.Role;
+import com.weno.role.RoleName;
 import com.weno.role.RoleRepository;
 import com.weno.user.User;
 import com.weno.user.UserRepository;
@@ -42,6 +43,7 @@ public class AuthService {
 
         User user = UserRequestDto.toEntity(userRequestDto);
         user.updatePassword(user.getPassword(), passwordEncoder);
+        roleRepository.save(new Role(user, RoleName.ROLE_USER));
         return UserResponseDto.of(userRepository.save(user));
     }
 

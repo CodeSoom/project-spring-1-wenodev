@@ -35,4 +35,10 @@ public class Role {
         this.user = user;
         this.roleName = roleName;
     }
+
+    @Builder
+    public Role(User user, RoleName roleName) {
+        this.user = user;
+        this.roleName = roleName;
+    }
 }
