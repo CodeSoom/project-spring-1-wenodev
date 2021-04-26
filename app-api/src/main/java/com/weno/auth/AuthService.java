@@ -3,6 +3,7 @@ package com.weno.auth;
 import com.weno.auth.dto.AuthResponseDto;
 import com.weno.auth.dto.UserResultData;
 import com.weno.auth.exception.AuthenticationBadRequestException;
+import com.weno.auth.exception.UserEmailDuplicatedException;
 import com.weno.role.Role;
 import com.weno.role.RoleRepository;
 import com.weno.user.User;
@@ -31,6 +32,11 @@ public class AuthService {
     }
 
     public UserResponseDto register(UserRequestDto userRequestDto) {
+        String email = userRequestDto.getEmail();
+        if (userRepository.existsByEmail(email)){
+            throw new UserEmailDuplicatedException(email);
+        }
+        
         User user = UserRequestDto.toEntity(userRequestDto);
         return UserResponseDto.of(userRepository.save(user));
     }
