@@ -9,6 +9,7 @@ import com.weno.user.dto.UserResponseDto;
 import com.weno.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ class AuthServiceTest {
     private RoleRepository roleRepository;
     private UserRepository userRepository;
     private JwtUtil jwtUtil;
+    private PasswordEncoder passwordEncoder;
     private AuthService authService;
     private UserRequestDto userRequestDto;
 
@@ -43,9 +45,10 @@ class AuthServiceTest {
     void setUp() {
         userRepository = mock(UserRepository.class);
         roleRepository = mock(RoleRepository.class);
+        passwordEncoder = mock(PasswordEncoder.class);
         jwtUtil = mock(JwtUtil.class);
 
-        authService = new AuthService(userRepository, roleRepository, jwtUtil);
+        authService = new AuthService(userRepository, roleRepository, jwtUtil, passwordEncoder);
 
         userRequestDto = UserRequestDto.builder()
                 .email(CREATE_EMAIL)

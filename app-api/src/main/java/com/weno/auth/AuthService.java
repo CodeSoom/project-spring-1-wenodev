@@ -12,6 +12,7 @@ import com.weno.user.dto.UserRequestDto;
 import com.weno.user.dto.UserResponseDto;
 import com.weno.user.errors.UserNotFoundException;
 import com.weno.utils.JwtUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,11 +25,13 @@ public class AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, RoleRepository roleRepository, JwtUtil jwtUtil) {
+    public AuthService(UserRepository userRepository, RoleRepository roleRepository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponseDto register(UserRequestDto userRequestDto) {
@@ -38,6 +41,7 @@ public class AuthService {
         }
 
         User user = UserRequestDto.toEntity(userRequestDto);
+        user.updatePassword(user.getPassword(), passwordEncoder);
         return UserResponseDto.of(userRepository.save(user));
     }
 

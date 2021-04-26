@@ -3,6 +3,7 @@ package com.weno.user;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,5 +39,9 @@ public class User {
 
     public boolean authenticate(String password){
         return this.password.equals(password) ? true : false;
+    }
+
+    public void updatePassword(String password, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
     }
 }
