@@ -3,7 +3,6 @@ package com.weno.filters;
 import com.weno.filters.errors.InvalidTokenException;
 import org.springframework.http.HttpStatus;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpFilter;

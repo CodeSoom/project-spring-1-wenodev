@@ -36,7 +36,7 @@ public class AuthService {
         if (userRepository.existsByEmail(email)){
             throw new UserEmailDuplicatedException(email);
         }
-        
+
         User user = UserRequestDto.toEntity(userRequestDto);
         return UserResponseDto.of(userRepository.save(user));
     }
