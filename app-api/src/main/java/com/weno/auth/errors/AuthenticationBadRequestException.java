@@ -1,4 +1,4 @@
-package com.weno.auth.exception;
+package com.weno.auth.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

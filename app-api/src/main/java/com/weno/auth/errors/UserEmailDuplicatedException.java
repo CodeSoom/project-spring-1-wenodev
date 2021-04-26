@@ -1,4 +1,4 @@
-package com.weno.auth.exception;
+package com.weno.auth.errors;
 
 public class UserEmailDuplicatedException extends RuntimeException {
     public UserEmailDuplicatedException(String email) {

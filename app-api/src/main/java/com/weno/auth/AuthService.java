@@ -2,8 +2,8 @@ package com.weno.auth;
 
 import com.weno.auth.dto.AuthResponseDto;
 import com.weno.auth.dto.UserResultData;
-import com.weno.auth.exception.AuthenticationBadRequestException;
-import com.weno.auth.exception.UserEmailDuplicatedException;
+import com.weno.auth.errors.AuthenticationBadRequestException;
+import com.weno.auth.errors.UserEmailDuplicatedException;
 import com.weno.role.Role;
 import com.weno.role.RoleRepository;
 import com.weno.user.User;
