@@ -53,28 +53,28 @@ class AuthServiceTest {
         userRequestDto = UserRequestDto.builder()
                 .email(CREATE_EMAIL)
                 .name(CREATE_EMAIL)
-                .password(CREATE_PASSWORD)
+                .password(passwordEncoder.encode(CREATE_PASSWORD))
                 .build();
 
         existedUser = User.builder()
                 .id(EXISTED_ID)
                 .email(EXISTED_EMAIL)
                 .name(EXISTED_NAME)
-                .password(EXISTED_PASSWORD)
+                .password(passwordEncoder.encode(EXISTED_PASSWORD))
                 .build();
 
         newUser = User.builder()
                 .id(CREATED_ID)
                 .email(CREATE_EMAIL)
                 .name(CREATE_NAME)
-                .password(CREATE_PASSWORD)
+                .password(passwordEncoder.encode(CREATE_PASSWORD))
                 .build();
 
         UserResultData userResultData = UserResultData.builder()
                 .id(EXISTED_ID)
                 .email(EXISTED_EMAIL)
                 .name(EXISTED_NAME)
-                .password(EXISTED_PASSWORD)
+                .password(passwordEncoder.encode(EXISTED_PASSWORD))
                 .build();
 
     }
@@ -84,13 +84,6 @@ class AuthServiceTest {
         given(userRepository.save(any(User.class))).willReturn(newUser);
         UserResponseDto userResponseDto = authService.register(userRequestDto);
         assertThat(userResponseDto.getId()).isEqualTo(CREATED_ID);
-    }
-
-    @Test
-    void testAuthenticateUser() {
-        given(userRepository.findByEmail(EXISTED_EMAIL)).willReturn(Optional.of(existedUser));
-        UserResultData userResultData = authService.authenticateUser(EXISTED_EMAIL, EXISTED_PASSWORD);
-        assertThat(userResultData.getEmail()).isEqualTo(EXISTED_EMAIL);
     }
 
     @Test
