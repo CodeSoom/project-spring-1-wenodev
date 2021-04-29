@@ -47,7 +47,7 @@ public class AuthService {
         return UserResponseDto.of(userRepository.save(user));
     }
 
-    public AuthResponseDto createToken(UserRequestDto userRequestDto) {
+    public AuthResponseDto login(UserRequestDto userRequestDto) {
         UserResultData userResultData = authenticateUser(
                 userRequestDto.getEmail(),
                 userRequestDto.getPassword());

@@ -20,7 +20,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/login")
     public AuthResponseDto login(@RequestBody UserRequestDto userRequestDto) {
-        return authService.createToken(userRequestDto);
+        return authService.login(userRequestDto);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
