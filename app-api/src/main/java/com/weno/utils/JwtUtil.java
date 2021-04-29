@@ -16,7 +16,7 @@ public class JwtUtil {
     public JwtUtil(@Value("${jwt.secret}") String secret) {
         key = Keys.hmacShaKeyFor(secret.getBytes());
     }
-    
+
     public String encode(String email) {
         return Jwts.builder()
                 .setSubject(email)
