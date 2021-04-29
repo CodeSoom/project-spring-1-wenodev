@@ -48,7 +48,6 @@ public class AuthService {
     }
 
     public AuthResponseDto login(UserRequestDto userRequestDto) {
-
         User user = userRepository.findByEmail(userRequestDto.getEmail())
                 .orElseThrow(()-> new UserNotFoundException("no user email : " + userRequestDto.getEmail()));
 
