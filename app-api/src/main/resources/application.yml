@@ -9,4 +9,4 @@ spring:
       enabled: true
 
 jwt:
-  secret: "12345678901234567890123456789010"
+  secret: "X05SIgPu8QT9FeTq7MBS0ty5M5JIZ8Bp"

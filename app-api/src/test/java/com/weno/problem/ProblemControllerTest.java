@@ -15,6 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProblemController.class)
 class ProblemControllerTest {
+    private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYMDVTSWdQdThRVDlGZVRxN01CUzB0eTVNNUpJWjhCcCJ9.jfk88pu5O-2MeTIrSp-aXw6HIrNnECjTz-9Ehy3pld4";
+    private static final String INVALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYMDVTSWdQdThRVDlGZVRxN01CUzB0eTVNNUpJWjhCcCJ9.jfk88pu5O-2MeTIrSp-aXw6HIrNnECjTz-9Ehy3pld5";
 
     @Autowired
     private MockMvc mockMvc;
@@ -58,4 +60,5 @@ class ProblemControllerTest {
         mockMvc.perform(delete(BASE_URL + "/" + EXITED_ID))
                 .andExpect(status().isNoContent());
     }
+
 }
