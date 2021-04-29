@@ -48,20 +48,17 @@ public class AuthService {
     }
 
     public AuthResponseDto login(UserRequestDto userRequestDto) {
-        UserResultData userResultData = authenticateUser(
-                userRequestDto.getEmail(),
-                userRequestDto.getPassword());
 
-        String accessToken = jwtUtil.encode(userResultData.getEmail());
+        User user = userRepository.findByEmail(userRequestDto.getEmail())
+                .orElseThrow(()-> new UserNotFoundException("no user email : " + userRequestDto.getEmail()));
+
+        if (!user.authenticate(userRequestDto.getPassword(), passwordEncoder)){
+            throw new AuthenticationBadRequestException();
+        }
+
+        String accessToken = jwtUtil.encode(user.getEmail());
 
         return AuthResponseDto.of(accessToken);
-    }
-
-    public UserResultData authenticateUser(String email, String password) {
-        return userRepository.findByEmail(email)
-                .filter(user -> user.authenticate(password))
-                .map(UserResultData::of)
-                .orElseThrow(AuthenticationBadRequestException::new);
     }
 
     public String parseToken(String accessToken) {

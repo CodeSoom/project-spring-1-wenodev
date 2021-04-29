@@ -37,8 +37,8 @@ public class User {
         this.password = password;
     }
 
-    public boolean authenticate(String password){
-        return this.password.equals(password) ? true : false;
+    public boolean authenticate(String password, PasswordEncoder passwordEncoder){
+        return passwordEncoder.matches(password, this.password);
     }
 
     public void updatePassword(String password, PasswordEncoder passwordEncoder) {
