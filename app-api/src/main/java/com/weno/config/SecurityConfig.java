@@ -3,6 +3,7 @@ package com.weno.config;
 import com.weno.auth.AuthService;
 import com.weno.filters.AuthenticationErrorFilter;
 import com.weno.filters.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

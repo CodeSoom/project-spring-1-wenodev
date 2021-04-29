@@ -1,31 +1,67 @@
 package com.weno.problem;
 
+import com.weno.auth.AuthService;
+import com.weno.problem.dto.ProblemRequestDto;
+import com.weno.problem.dto.ProblemResponseDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc
 @WebMvcTest(ProblemController.class)
 class ProblemControllerTest {
-    private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYMDVTSWdQdThRVDlGZVRxN01CUzB0eTVNNUpJWjhCcCJ9.jfk88pu5O-2MeTIrSp-aXw6HIrNnECjTz-9Ehy3pld4";
-    private static final String INVALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYMDVTSWdQdThRVDlGZVRxN01CUzB0eTVNNUpJWjhCcCJ9.jfk88pu5O-2MeTIrSp-aXw6HIrNnECjTz-9Ehy3pld5";
+//    private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEwIn0.MuabToDnERkEmd4OAPHlCoxM7eWB-Jr6rrqRNeV_S4A";
+    private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9." +
+            "eyJzdWIiOiJleGlzdGVkRW1haWwifQ.UQodS3elf3Cu4g0PDFHqVloFbcKHHmTTnk0jGmiwPXY";
+
 
     @Autowired
+    private WebApplicationContext context;
+
     private MockMvc mockMvc;
 
     @MockBean
     private ProblemService problemService;
 
+    @MockBean
+    private AuthService authService;
+
     private static final Long EXITED_ID = 1L;
     private static final String BASE_URL = "/api/v1/problems";
+
+    @BeforeEach
+    void setUp(){
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+
+        Problem problem = Problem.builder()
+                .id(EXITED_ID)
+                .build();
+
+        given(problemService.saveProblem(any(ProblemRequestDto.class)))
+                .willReturn(ProblemResponseDto.of(problem, List.of()));
+
+    }
 
     @Test
     void testGetAllProblems() throws Exception {
@@ -41,10 +77,15 @@ class ProblemControllerTest {
 
     @Test
     void testSaveProblem() throws Exception {
+        given(authService.parseToken(VALID_TOKEN)).willReturn(VALID_TOKEN);
+
         mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer" + VALID_TOKEN)
                 .content("{\"title\" : \"dummy-test-title\"}"))
                 .andExpect(status().isCreated());
+
+//        verify(problemService).saveProblem(any(ProblemRequestDto.class));
     }
 
     @Test

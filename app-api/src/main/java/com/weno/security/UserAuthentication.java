@@ -27,6 +27,11 @@ public class UserAuthentication extends AbstractAuthenticationToken {
         return null;
     }
 
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
+
     public String getEmail() {
         return email;
     }

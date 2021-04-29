@@ -4,6 +4,7 @@ import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/problems")
 @RestController
+@RequestMapping("/api/v1/problems")
+@CrossOrigin
 public class ProblemController {
 
     private final ProblemService problemService;
@@ -36,9 +38,9 @@ public class ProblemController {
         return problemService.getProblem(id);
     }
 
-    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("isAuthenticated()")
     public ProblemResponseDto saveProblem(@RequestBody ProblemRequestDto request){
         return problemService.saveProblem(request);
     }

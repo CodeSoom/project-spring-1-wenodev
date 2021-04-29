@@ -4,6 +4,7 @@ import com.weno.auth.dto.AuthResponseDto;
 import com.weno.auth.dto.UserResultData;
 import com.weno.auth.errors.AuthenticationBadRequestException;
 import com.weno.auth.errors.UserEmailDuplicatedException;
+import com.weno.filters.errors.InvalidTokenException;
 import com.weno.role.Role;
 import com.weno.role.RoleName;
 import com.weno.role.RoleRepository;
@@ -13,6 +14,8 @@ import com.weno.user.dto.UserRequestDto;
 import com.weno.user.dto.UserResponseDto;
 import com.weno.user.errors.UserNotFoundException;
 import com.weno.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,8 +63,16 @@ public class AuthService {
         return AuthResponseDto.of(accessToken);
     }
 
-    public String parseToken(String accessToken) {
-        return null;
+    public String parseToken(String token) {
+        if(token == null || token.isBlank()) {
+            throw new InvalidTokenException(token);
+        }
+
+        try {
+            return jwtUtil.decode(token).getSubject();
+        } catch(SignatureException e) {
+            throw new InvalidTokenException(token);
+        }
     }
 
     public List<Role> roles(String email) {
