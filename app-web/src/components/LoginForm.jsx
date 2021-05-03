@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import * as API from '../services/api';
 
-export default function LoginForm(){
+export default function LoginForm({history}){
     const [user, setUser] = useState({
         email : "",
         password : "",
@@ -18,10 +18,7 @@ export default function LoginForm(){
     function submitUser(){
         API.loginUser(user)
         .then(response => {
-            console.log(response);
-        })
-        .catch(e => {
-            new Error(e);
+            history.push("/");
         })
     }
 
