@@ -3,11 +3,10 @@ import * as API from '../services/api';
 
 export default function SignUpForm({history}){
     const [user, setUser] = useState({
-        email : undefined,
-        password : undefined,
-        name : undefined,
+        email : "",
+        password : "",
+        name : "",
     });
-
 
     function onChange(event){
         const{name, value} = event.target;
@@ -20,7 +19,7 @@ export default function SignUpForm({history}){
     function submitUser(){
         API.postUser(user)
             .then(response => {
-                history.push("/")
+                history.push("/login")
             })
             .catch(e => {
                 console.error(e);

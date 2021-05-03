@@ -1,10 +1,8 @@
 package com.weno.utils;
 
-import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

@@ -59,7 +59,7 @@ export default function ProblemForm({history}) {
       history.push('/');
     })
     .catch((e) => {
-      console.log(e);
+      throw new Error();
     })
   }
 
