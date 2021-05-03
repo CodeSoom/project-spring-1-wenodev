@@ -19,7 +19,7 @@ export default function SignUpForm({history}){
     function submitUser(){
         API.postUser(user)
             .then(response => {
-                history.push("/")
+                history.push("/login")
             })
             .catch(e => {
                 console.error(e);
