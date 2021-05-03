@@ -18,7 +18,6 @@ export default function LoginForm({history}){
     function submitUser(){
         API.loginUser(user)
         .then(response => {
-            console.log(response);
             localStorage.setItem("accessToken", response.accessToken)
             history.push("/");
         })
