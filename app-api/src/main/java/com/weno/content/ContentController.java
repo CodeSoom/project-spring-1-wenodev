@@ -25,30 +25,30 @@ public class ContentController {
     }
 
     @GetMapping("/{id}")
-    public ContentResponseDto getContent(@PathVariable Long id){
-        return contentService.getContent(id);
+    public ContentResponseDto detail(@PathVariable Long id){
+        return contentService.detail(id);
     }
 
     @GetMapping
-    public List<ContentResponseDto> getAllContent(){
-        return contentService.getAllContents();
+    public List<ContentResponseDto> list(){
+        return contentService.list();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ContentResponseDto saveContent(@RequestBody ContentRequestDto request){
-        return contentService.saveContent(request);
+    public ContentResponseDto create(@RequestBody ContentRequestDto request){
+        return contentService.create(request);
     }
 
     @PutMapping("/{id}")
-    public ContentResponseDto updateContent(@PathVariable Long id, @RequestBody ContentRequestDto request){
-        return contentService.updateContent(id, request);
+    public ContentResponseDto update(@PathVariable Long id, @RequestBody ContentRequestDto request){
+        return contentService.update(id, request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ContentResponseDto deleteContent(@PathVariable Long id){
-        return contentService.deleteContent(id);
+    public ContentResponseDto delete(@PathVariable Long id){
+        return contentService.delete(id);
     }
 
 }

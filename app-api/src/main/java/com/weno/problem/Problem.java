@@ -29,7 +29,7 @@ public class Problem {
         this.title = title;
     }
 
-    public void updateProblem(String title) {
+    public void updateAll(String title) {
         this.title = title;
     }
 }
