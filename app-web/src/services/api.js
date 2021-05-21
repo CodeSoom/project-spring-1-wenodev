@@ -19,10 +19,9 @@ export async function postProblem(problem) {
   if(!localStorage.getItem("accessToken")){
     alert("로그인이 필요합니다.");
     return;
-}
-localStorage.getItem("accessToken");
-
-  const accessToken = UTIL.getAccessToken();
+  }
+  
+  const accessToken = localStorage.getItem("accessToken");
   const url = "http://localhost:8080/api/v1/problems";
   const response = await fetch(url, {
     method: 'POST',
