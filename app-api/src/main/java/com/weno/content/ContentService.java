@@ -18,29 +18,29 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
-    public ContentResponseDto getContent(Long id) {
+    public ContentResponseDto detail(Long id) {
         Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
         return ContentResponseDto.of(content);
     }
 
-    public List<ContentResponseDto> getAllContents() {
+    public List<ContentResponseDto> list() {
         List<Content> contents = contentRepository.findAll();
         return ContentResponseDto.ofList(contents);
     }
 
-    public ContentResponseDto saveContent(ContentRequestDto request) {
+    public ContentResponseDto create(ContentRequestDto request) {
         Content content = ContentRequestDto.toEntity(request);
         contentRepository.save(content);
         return ContentResponseDto.of(content);
     }
 
-    public ContentResponseDto updateContent(Long id, ContentRequestDto request) {
+    public ContentResponseDto update(Long id, ContentRequestDto request) {
         Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
         content.updateContent(request.getQuestion(), request.getAnswer(), request.getUserAnswer());
         return ContentResponseDto.of(content);
     }
 
-    public ContentResponseDto deleteContent(Long id) {
+    public ContentResponseDto delete(Long id) {
         Content content = contentRepository.findById(id).orElseThrow(()->new ContentNotFoundException("no content id : " + id));
         contentRepository.delete(content);
         return ContentResponseDto.of(content);
