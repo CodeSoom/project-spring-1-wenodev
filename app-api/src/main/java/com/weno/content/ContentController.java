@@ -25,12 +25,12 @@ public class ContentController {
     }
 
     @GetMapping("/{id}")
-    public ContentResponseDto getContent(@PathVariable Long id){
+    public ContentResponseDto getDetail(@PathVariable Long id){
         return contentService.getContent(id);
     }
 
     @GetMapping
-    public List<ContentResponseDto> getAllContent(){
+    public List<ContentResponseDto> getList(){
         return contentService.getAllContents();
     }
 

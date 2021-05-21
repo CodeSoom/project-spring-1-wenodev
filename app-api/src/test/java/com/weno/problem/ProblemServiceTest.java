@@ -53,7 +53,7 @@ class ProblemServiceTest {
         given(problemRepository.findAll()).willReturn(problems);
         given(contentRepository.findAllByProblem(problem)).willReturn(List.of(content));
 
-        List<ProblemResponseDto> problemResponses = problemService.getList();
+        List<ProblemResponseDto> problemResponses = problemService.list();
 
         assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title-existed");
         assertThat(problemResponses.get(0).getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-existed");
@@ -63,7 +63,7 @@ class ProblemServiceTest {
     @Test
     void testGetProblem(){
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
-        ProblemResponseDto problemResponse = problemService.getDetail(EXISTED_ID);
+        ProblemResponseDto problemResponse = problemService.detail(EXISTED_ID);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-existed");
         verify(problemRepository).findById(EXISTED_ID);

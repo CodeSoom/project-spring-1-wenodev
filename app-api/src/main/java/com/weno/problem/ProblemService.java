@@ -26,7 +26,7 @@ public class ProblemService {
         this.contentRepository = contentRepository;
     }
 
-    public List<ProblemResponseDto> getList() {
+    public List<ProblemResponseDto> list() {
         List<Problem> problems = problemRepository.findAll();
         List<ProblemResponseDto> responses = new ArrayList<>();
         for (Problem problem : problems){
@@ -36,7 +36,7 @@ public class ProblemService {
         return responses;
     }
 
-    public ProblemResponseDto getDetail(Long id) {
+    public ProblemResponseDto detail(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         List<Content> contents = contentRepository.findAllByProblem(problem);
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));

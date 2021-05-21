@@ -29,13 +29,13 @@ public class ProblemController {
     }
 
     @GetMapping
-    public List<ProblemResponseDto> getList(){
-        return problemService.getList();
+    public List<ProblemResponseDto> list(){
+        return problemService.list();
     }
 
     @GetMapping("/{id}")
-    public ProblemResponseDto getDetail(@PathVariable Long id){
-        return problemService.getDetail(id);
+    public ProblemResponseDto detail(@PathVariable Long id){
+        return problemService.detail(id);
     }
 
     @PostMapping
