@@ -57,7 +57,7 @@ public class ProblemService {
 
     public ProblemResponseDto update(Long id, ProblemRequestDto request) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
-        problem.updateProblem(request.getTitle());
+        problem.updateAll(request.getTitle());
 
         List<Content> contents = ContentRequestDto.toEntityList(request.getContents());
         for (Content newContent : contents){
