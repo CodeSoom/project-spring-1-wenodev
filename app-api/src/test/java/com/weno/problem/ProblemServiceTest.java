@@ -53,7 +53,7 @@ class ProblemServiceTest {
         given(problemRepository.findAll()).willReturn(problems);
         given(contentRepository.findAllByProblem(problem)).willReturn(List.of(content));
 
-        List<ProblemResponseDto> problemResponses = problemService.getAllProblems();
+        List<ProblemResponseDto> problemResponses = problemService.getList();
 
         assertThat(problemResponses.get(0).getTitle()).isEqualTo("dummy-test-title-existed");
         assertThat(problemResponses.get(0).getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-existed");
@@ -63,7 +63,7 @@ class ProblemServiceTest {
     @Test
     void testGetProblem(){
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
-        ProblemResponseDto problemResponse = problemService.getProblem(EXISTED_ID);
+        ProblemResponseDto problemResponse = problemService.getDetail(EXISTED_ID);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-existed");
         verify(problemRepository).findById(EXISTED_ID);
@@ -85,7 +85,7 @@ class ProblemServiceTest {
 
         given(problemRepository.save(any(Problem.class))).willReturn(problem);
         given(contentRepository.save(any(Content.class))).willReturn(content);
-        ProblemResponseDto problemResponse = problemService.saveProblem(problemRequest);
+        ProblemResponseDto problemResponse = problemService.create(problemRequest);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-new");
         assertThat(problemResponse.getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-new");
@@ -109,7 +109,7 @@ class ProblemServiceTest {
 
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
-        ProblemResponseDto problemResponse = problemService.updateProblem(EXISTED_ID, problemRequest);
+        ProblemResponseDto problemResponse = problemService.update(EXISTED_ID, problemRequest);
 
         assertThat(problemResponse.getTitle()).isEqualTo("dummy-test-title-update");
         assertThat(problemResponse.getContents().get(0).getAnswer()).isEqualTo("dummy-test-answer-update");
@@ -118,7 +118,7 @@ class ProblemServiceTest {
     @Test
     void testDeleteProblem(){
         given(problemRepository.findById(EXISTED_ID)).willReturn(Optional.of(problem));
-        ProblemResponseDto problemResponse = problemService.deleteProblem(EXISTED_ID);
+        ProblemResponseDto problemResponse = problemService.delete(EXISTED_ID);
 
         assertThat(problemResponse.getId()).isEqualTo(EXISTED_ID);
     }

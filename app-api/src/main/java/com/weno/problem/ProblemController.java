@@ -30,29 +30,29 @@ public class ProblemController {
 
     @GetMapping
     public List<ProblemResponseDto> getList(){
-        return problemService.getAllProblems();
+        return problemService.getList();
     }
 
     @GetMapping("/{id}")
     public ProblemResponseDto getDetail(@PathVariable Long id){
-        return problemService.getProblem(id);
+        return problemService.getDetail(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
-    public ProblemResponseDto save(@RequestBody ProblemRequestDto request){
-        return problemService.saveProblem(request);
+    public ProblemResponseDto create(@RequestBody ProblemRequestDto request){
+        return problemService.create(request);
     }
 
     @PutMapping("/{id}")
     public ProblemResponseDto update(@PathVariable Long id, @RequestBody ProblemRequestDto request){
-        return problemService.updateProblem(id, request);
+        return problemService.update(id, request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ProblemResponseDto delete(@PathVariable Long id){
-        return problemService.deleteProblem(id);
+        return problemService.delete(id);
     }
 }

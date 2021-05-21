@@ -57,7 +57,7 @@ class ProblemControllerTest {
                 .id(EXITED_ID)
                 .build();
 
-        given(problemService.saveProblem(any(ProblemRequestDto.class)))
+        given(problemService.create(any(ProblemRequestDto.class)))
                 .willReturn(ProblemResponseDto.of(problem, List.of()));
 
     }
