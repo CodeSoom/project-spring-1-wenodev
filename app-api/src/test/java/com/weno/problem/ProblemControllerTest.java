@@ -3,7 +3,10 @@ package com.weno.problem;
 import com.weno.auth.AuthService;
 import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
+import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,25 +19,27 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 @WebMvcTest(ProblemController.class)
+@DisplayName("ProblemController 테스트")
 class ProblemControllerTest {
     private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9." +
             "eyJzdWIiOiJleGlzdGVkRW1haWwifQ.UQodS3elf3Cu4g0PDFHqVloFbcKHHmTTnk0jGmiwPXY";
 
-
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
@@ -43,8 +48,12 @@ class ProblemControllerTest {
     @MockBean
     private AuthService authService;
 
-    private static final Long EXITED_ID = 1L;
     private static final String BASE_URL = "/api/v1/problems";
+    private static final Long EXISTED_ID = 1L;
+    private static final String EXISTED_TITLE = "existedTitle";
+
+    private Problem existedProblem;
+    private ProblemResponseDto existedProblemResponseDto;
 
     @BeforeEach
     void setUp(){
@@ -53,24 +62,33 @@ class ProblemControllerTest {
                 .apply(springSecurity())
                 .build();
 
-        Problem problem = Problem.builder()
-                .id(EXITED_ID)
+        existedProblem = Problem.builder()
+                .id(EXISTED_ID)
+                .title(EXISTED_TITLE)
                 .build();
 
-        given(problemService.create(any(ProblemRequestDto.class)))
-                .willReturn(ProblemResponseDto.of(problem, List.of()));
-
+        existedProblemResponseDto = ProblemResponseDto.of(existedProblem, null);
     }
 
-    @Test
-    void testGetAllProblems() throws Exception {
-        mockMvc.perform(get(BASE_URL))
-                .andExpect(status().isOk());
+    @Nested
+    @DisplayName("list 메소드는")
+    class Describe_list{
+        @Test
+        @DisplayName("전체 Problem 리스트와 OK를 리턴한다.")
+        void itReturnProblemListAndOk() throws Exception {
+            given(problemService.list()).willReturn(List.of(existedProblemResponseDto));
+
+            mockMvc.perform(get(BASE_URL))
+                    .andExpect(content().string(StringContains.containsString(EXISTED_TITLE)))
+                    .andExpect(status().isOk());
+
+            verify(problemService).list();
+        }
     }
 
     @Test
     void testGetProblem() throws Exception {
-        mockMvc.perform(get(BASE_URL + "/" + EXITED_ID))
+        mockMvc.perform(get(BASE_URL + "/" + EXISTED_ID))
                 .andExpect(status().isOk());
     }
 
@@ -89,7 +107,7 @@ class ProblemControllerTest {
 
     @Test
     void testUpdateProblem() throws Exception {
-        mockMvc.perform(put(BASE_URL + "/" + EXITED_ID)
+        mockMvc.perform(put(BASE_URL + "/" + EXISTED_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"title\" : \"dummy-test-title\"}"))
                 .andExpect(status().isOk());
@@ -97,7 +115,7 @@ class ProblemControllerTest {
 
     @Test
     void testDeleteProblem() throws Exception {
-        mockMvc.perform(delete(BASE_URL + "/" + EXITED_ID))
+        mockMvc.perform(delete(BASE_URL + "/" + EXISTED_ID))
                 .andExpect(status().isNoContent());
     }
 
