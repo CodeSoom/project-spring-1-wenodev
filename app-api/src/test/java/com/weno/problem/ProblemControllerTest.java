@@ -1,6 +1,7 @@
 package com.weno.problem;
 
 import com.weno.auth.AuthService;
+import com.weno.filters.errors.InvalidTokenException;
 import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
 import com.weno.problem.exception.ProblemNotFoundException;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -38,6 +38,9 @@ class ProblemControllerTest {
     private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9." +
             "eyJzdWIiOiJleGlzdGVkRW1haWwifQ.UQodS3elf3Cu4g0PDFHqVloFbcKHHmTTnk0jGmiwPXY";
 
+    private static final String NOT_VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9." +
+            "eyJzdWIiOiJleGlzdGVkRW1haWwifQ.UQodS3elf3Cu4g0PDFHqVloFbcKHHmTTnk0jGmiwPXA";
+
     @Autowired
     private WebApplicationContext context;
 
@@ -54,12 +57,15 @@ class ProblemControllerTest {
 
     private static final Long NOT_EXISTED_ID = 100L;
 
-
     private static final Long EXISTED_ID = 1L;
     private static final String EXISTED_TITLE = "existedTitle";
-
     private Problem existedProblem;
     private ProblemResponseDto existedProblemResponseDto;
+
+    private static final Long NEW_ID = 2L;
+    private static final String NEW_TITLE = "newTitle";
+    private Problem newProblem;
+    private ProblemResponseDto newProblemResponseDto;
 
     @BeforeEach
     void setUp(){
@@ -74,6 +80,13 @@ class ProblemControllerTest {
                 .build();
 
         existedProblemResponseDto = ProblemResponseDto.of(existedProblem, null);
+
+        newProblem = Problem.builder()
+                .id(NEW_ID)
+                .title(NEW_TITLE)
+                .build();
+
+        newProblemResponseDto = ProblemResponseDto.of(newProblem, null);
     }
 
     @Nested
@@ -100,7 +113,7 @@ class ProblemControllerTest {
         class Context_WithExistedId{
             @Test
             @DisplayName("Problem과 OK를 리턴한다.")
-            void ItReturnProblemAndOk() throws Exception {
+            void ItReturnProblemAndOK() throws Exception {
                 given(problemService.detail(EXISTED_ID)).willReturn(existedProblemResponseDto);
 
                 mockMvc.perform(get(BASE_URL + "/" + EXISTED_ID))
@@ -115,7 +128,7 @@ class ProblemControllerTest {
         class Context_WithNotExistedId{
             @Test
             @DisplayName("예외를 발생시키고 NOT_FOUND를 리턴한다.")
-            void ItThrowProblemNotFoundException() throws Exception {
+            void ItThrowProblemNotFoundExceptionAndReturnNOT_FOUND() throws Exception {
                 given(problemService.detail(NOT_EXISTED_ID))
                         .willThrow(new ProblemNotFoundException("no problem id : " + NOT_EXISTED_ID));
 
@@ -127,17 +140,44 @@ class ProblemControllerTest {
         }
     }
 
-    @Test
-    void testSaveProblem() throws Exception {
-        given(authService.parseToken(VALID_TOKEN)).willReturn(VALID_TOKEN);
+    @Nested
+    @DisplayName("create 메소드는")
+    class Describe_create{
+        @Nested
+        @DisplayName("만약 유요한 토큰값이 주어진다면")
+        class Context_WithValidToken{
+            @Test
+            @DisplayName("Problem을 저장하고 저장된 상품과 CREATED를 리턴한다.")
+            void ItSaveProblemAndReturnSavedProblemAndCREATED() throws Exception {
+                given(authService.parseToken(VALID_TOKEN)).willReturn(VALID_TOKEN);
 
-        mockMvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer" + VALID_TOKEN)
-                .content("{\"title\" : \"dummy-test-title\"}"))
-                .andExpect(status().isCreated());
+                mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + VALID_TOKEN)
+                        .content("{\"title\" : \"dummy-test-title\"}"))
+                        .andExpect(status().isCreated());
 
-//        verify(problemService).saveProblem(any(ProblemRequestDto.class));
+                verify(problemService).create(any(ProblemRequestDto.class));
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 유요하지 않은 토큰값이 주어진다면")
+        class Context_WithNotValidToken{
+            @Test
+            @DisplayName("예외를 발생시키고 UNAUTHORIZED를 리턴하라")
+            void ItThrowInvalidTokenExceptionAndReturnUNAUTHORIZED() throws Exception {
+                given(authService.parseToken(NOT_VALID_TOKEN))
+                        .willThrow(new InvalidTokenException(NOT_VALID_TOKEN));
+
+                mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + NOT_VALID_TOKEN)
+                        .content("{\"title\" : \"dummy-test-title\"}"))
+                        .andExpect(status().isUnauthorized());
+            }
+        }
+
     }
 
     @Test
