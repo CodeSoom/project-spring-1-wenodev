@@ -3,6 +3,7 @@ package com.weno.problem;
 import com.weno.auth.AuthService;
 import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
+import com.weno.problem.exception.ProblemNotFoundException;
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -49,6 +51,10 @@ class ProblemControllerTest {
     private AuthService authService;
 
     private static final String BASE_URL = "/api/v1/problems";
+
+    private static final Long NOT_EXISTED_ID = 100L;
+
+
     private static final Long EXISTED_ID = 1L;
     private static final String EXISTED_TITLE = "existedTitle";
 
@@ -86,10 +92,39 @@ class ProblemControllerTest {
         }
     }
 
-    @Test
-    void testGetProblem() throws Exception {
-        mockMvc.perform(get(BASE_URL + "/" + EXISTED_ID))
-                .andExpect(status().isOk());
+    @Nested
+    @DisplayName("detail 메소드는")
+    class Describe_detail{
+        @Nested
+        @DisplayName("id가 존재한다면")
+        class Context_WithExistedId{
+            @Test
+            @DisplayName("Problem과 OK를 리턴한다.")
+            void ItReturnProblemAndOk() throws Exception {
+                given(problemService.detail(EXISTED_ID)).willReturn(existedProblemResponseDto);
+
+                mockMvc.perform(get(BASE_URL + "/" + EXISTED_ID))
+                        .andExpect(content().string(StringContains.containsString(EXISTED_TITLE)))
+                        .andExpect(status().isOk());
+
+                verify(problemService).detail(EXISTED_ID);
+            }
+        }
+        @Nested
+        @DisplayName("id가 존재하지 않는다면")
+        class Context_WithNotExistedId{
+            @Test
+            @DisplayName("예외를 발생시키고 NOT_FOUND를 리턴한다.")
+            void ItThrowProblemNotFoundException() throws Exception {
+                given(problemService.detail(NOT_EXISTED_ID))
+                        .willThrow(new ProblemNotFoundException("no problem id : " + NOT_EXISTED_ID));
+
+                mockMvc.perform(get(BASE_URL + "/" + NOT_EXISTED_ID))
+                        .andExpect(status().isNotFound());
+
+                verify(problemService).detail(NOT_EXISTED_ID);
+            }
+        }
     }
 
     @Test
