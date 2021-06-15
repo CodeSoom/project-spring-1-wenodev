@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -67,6 +68,13 @@ class ProblemControllerTest {
     private Problem newProblem;
     private ProblemResponseDto newProblemResponseDto;
 
+
+    private static final String UPDATE_TITLE = "updateTitle";
+    private Problem updateProblem;
+    private ProblemResponseDto updateProblemResponseDto;
+    private ProblemRequestDto updateProblemRequestDto;
+
+
     @BeforeEach
     void setUp(){
         mockMvc = MockMvcBuilders
@@ -87,6 +95,16 @@ class ProblemControllerTest {
                 .build();
 
         newProblemResponseDto = ProblemResponseDto.of(newProblem, null);
+
+        updateProblem = Problem.builder()
+                .title(UPDATE_TITLE)
+                .build();
+
+        updateProblemResponseDto = ProblemResponseDto.of(updateProblem, null);
+
+        updateProblemRequestDto = ProblemRequestDto.builder()
+                .title(UPDATE_TITLE)
+                .build();
     }
 
     @Nested
@@ -180,14 +198,23 @@ class ProblemControllerTest {
 
     }
 
-    @Test
-    void testUpdateProblem() throws Exception {
-        mockMvc.perform(put(BASE_URL + "/" + EXISTED_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"title\" : \"dummy-test-title\"}"))
-                .andExpect(status().isOk());
+    @Nested
+    @DisplayName("update 메소드는")
+    class Describe_update{
+        @Nested
+        @DisplayName("만약 존재하는 id가 주어진다면")
+        class Context_WithExistedId{
+            @Test
+            @DisplayName("Problem을 수정하고 수정된 Problem과 Ok 리턴하라")
+            void itUpdateProblemAndReturnProblemAndOk() throws Exception {
+                mockMvc.perform(put(BASE_URL + "/" + EXISTED_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"title\" : \"updateTitle\"}"))
+                        .andExpect(status().isOk());
+            }
+        }
     }
-
+    
     @Test
     void testDeleteProblem() throws Exception {
         mockMvc.perform(delete(BASE_URL + "/" + EXISTED_ID))
