@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -201,20 +202,26 @@ class ProblemControllerTest {
     @Nested
     @DisplayName("update 메소드는")
     class Describe_update{
+
         @Nested
         @DisplayName("만약 존재하는 id가 주어진다면")
         class Context_WithExistedId{
+
             @Test
             @DisplayName("Problem을 수정하고 수정된 Problem과 Ok 리턴하라")
             void itUpdateProblemAndReturnProblemAndOk() throws Exception {
+                given(problemService.update(eq(EXISTED_ID), any(ProblemRequestDto.class))).willReturn(updateProblemResponseDto);
+
                 mockMvc.perform(put(BASE_URL + "/" + EXISTED_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"title\" : \"updateTitle\"}"))
                         .andExpect(status().isOk());
+
+                verify(problemService).update(eq(EXISTED_ID), any(ProblemRequestDto.class));
             }
         }
     }
-    
+
     @Test
     void testDeleteProblem() throws Exception {
         mockMvc.perform(delete(BASE_URL + "/" + EXISTED_ID))
