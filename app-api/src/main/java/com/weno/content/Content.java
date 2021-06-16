@@ -45,7 +45,7 @@ public class Content {
         this.problem = problem;
     }
 
-    public void updateContent(String question, String answer, String userAnswer) {
+    public void updateAll(String question, String answer, String userAnswer) {
         this.question = question;
         this.answer = answer;
         this.userAnswer = userAnswer;

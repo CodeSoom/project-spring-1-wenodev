@@ -26,7 +26,7 @@ public class ProblemService {
         this.contentRepository = contentRepository;
     }
 
-    public List<ProblemResponseDto> getAllProblems() {
+    public List<ProblemResponseDto> list() {
         List<Problem> problems = problemRepository.findAll();
         List<ProblemResponseDto> responses = new ArrayList<>();
         for (Problem problem : problems){
@@ -36,13 +36,13 @@ public class ProblemService {
         return responses;
     }
 
-    public ProblemResponseDto getProblem(Long id) {
+    public ProblemResponseDto detail(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         List<Content> contents = contentRepository.findAllByProblem(problem);
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
     }
 
-    public ProblemResponseDto saveProblem(ProblemRequestDto request) {
+    public ProblemResponseDto create(ProblemRequestDto request) {
         Problem problem = ProblemRequestDto.toEntity(request);
         problemRepository.save(problem);
 
@@ -55,21 +55,21 @@ public class ProblemService {
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
     }
 
-    public ProblemResponseDto updateProblem(Long id, ProblemRequestDto request) {
+    public ProblemResponseDto update(Long id, ProblemRequestDto request) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
-        problem.updateProblem(request.getTitle());
+        problem.updateAll(request.getTitle());
 
         List<Content> contents = ContentRequestDto.toEntityList(request.getContents());
         for (Content newContent : contents){
             Content content = contentRepository.findById(newContent.getId()).orElseThrow(()->new ContentNotFoundException("no content id : " + newContent.getId()));
-            content.updateContent(newContent.getQuestion(), newContent.getAnswer(), newContent.getUserAnswer());
+            content.updateAll(newContent.getQuestion(), newContent.getAnswer(), newContent.getUserAnswer());
             contentRepository.save(content);
         }
 
         return ProblemResponseDto.of(problem, ContentResponseDto.ofList(contents));
     }
 
-    public ProblemResponseDto deleteProblem(Long id) {
+    public ProblemResponseDto delete(Long id) {
         Problem problem = problemRepository.findById(id).orElseThrow(()-> new ProblemNotFoundException("no problem id :" + id));
         problemRepository.delete(problem);
         List<Content> contents = contentRepository.findAllByProblem(problem);

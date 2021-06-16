@@ -3,7 +3,7 @@ import ContentForm from './ContentForm';
 import ContentList from './ContentList';
 import * as API from '../services/api';
 
-export default function ProblemForm(props) {
+export default function ProblemForm({history}) {
 
   const [title, setTitle] = useState()
 
@@ -56,10 +56,10 @@ export default function ProblemForm(props) {
 
     API.postProblem(data)
     .then((response) =>{
-      props.history.push('/');
+      history.push('/');
     })
     .catch((e) => {
-      console.log(e);
+      throw new Error();
     })
   }
 

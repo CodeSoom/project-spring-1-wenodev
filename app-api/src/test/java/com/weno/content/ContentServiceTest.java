@@ -41,7 +41,7 @@ class ContentServiceTest {
     @Test
     void testGetContent(){
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
-        ContentResponseDto contentResponseDto = contentService.getContent(EXISTED_ID);
+        ContentResponseDto contentResponseDto = contentService.detail(EXISTED_ID);
         assertThat(contentResponseDto.getAnswer()).isEqualTo("dummy-test-answer-existed");
         verify(contentRepository).findById(EXISTED_ID);
     }
@@ -49,7 +49,7 @@ class ContentServiceTest {
     @Test
     void testGetAllContents(){
         given(contentRepository.findAll()).willReturn(List.of(content));
-        List<ContentResponseDto> contentResponseList = contentService.getAllContents();
+        List<ContentResponseDto> contentResponseList = contentService.list();
         assertThat(contentResponseList.get(0).getId()).isEqualTo(EXISTED_ID);
         verify(contentRepository).findAll();
     }
@@ -63,7 +63,7 @@ class ContentServiceTest {
                 .build();
 
         given(contentRepository.save(any(Content.class))).willReturn(content);
-        ContentResponseDto contentResponse = contentService.saveContent(request);
+        ContentResponseDto contentResponse = contentService.create(request);
         assertThat(contentResponse.getAnswer()).isEqualTo("dummy-test-answer-new");
     }
 
@@ -76,14 +76,14 @@ class ContentServiceTest {
                 .build();
 
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
-        ContentResponseDto contentResponse = contentService.updateContent(EXISTED_ID, request);
+        ContentResponseDto contentResponse = contentService.update(EXISTED_ID, request);
         assertThat(contentResponse.getAnswer()).isEqualTo("dummy-test-answer-update");
     }
 
     @Test
     void deleteContent(){
         given(contentRepository.findById(EXISTED_ID)).willReturn(Optional.of(content));
-        ContentResponseDto contentResponse = contentService.deleteContent(EXISTED_ID);
+        ContentResponseDto contentResponse = contentService.delete(EXISTED_ID);
         assertThat(contentResponse.getId()).isEqualTo(EXISTED_ID);
     }
 

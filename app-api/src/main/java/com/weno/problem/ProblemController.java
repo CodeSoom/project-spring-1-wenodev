@@ -3,6 +3,8 @@ package com.weno.problem;
 import com.weno.problem.dto.ProblemRequestDto;
 import com.weno.problem.dto.ProblemResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/problems")
 @RestController
+@RequestMapping("/api/v1/problems")
+@CrossOrigin
 public class ProblemController {
 
     private final ProblemService problemService;
@@ -26,29 +29,30 @@ public class ProblemController {
     }
 
     @GetMapping
-    public List<ProblemResponseDto> getAllProblems(){
-        return problemService.getAllProblems();
+    public List<ProblemResponseDto> list(){
+        return problemService.list();
     }
 
     @GetMapping("/{id}")
-    public ProblemResponseDto getProblem(@PathVariable Long id){
-        return problemService.getProblem(id);
+    public ProblemResponseDto detail(@PathVariable Long id){
+        return problemService.detail(id);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ProblemResponseDto saveProblem(@RequestBody ProblemRequestDto request){
-        return problemService.saveProblem(request);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("isAuthenticated()")
+    public ProblemResponseDto create(@RequestBody ProblemRequestDto request){
+        return problemService.create(request);
     }
 
     @PutMapping("/{id}")
-    public ProblemResponseDto updateProblem(@PathVariable Long id, @RequestBody ProblemRequestDto request){
-        return problemService.updateProblem(id, request);
+    public ProblemResponseDto update(@PathVariable Long id, @RequestBody ProblemRequestDto request){
+        return problemService.update(id, request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ProblemResponseDto deleteProblem(@PathVariable Long id){
-        return problemService.deleteProblem(id);
+    public ProblemResponseDto delete(@PathVariable Long id){
+        return problemService.delete(id);
     }
 }
